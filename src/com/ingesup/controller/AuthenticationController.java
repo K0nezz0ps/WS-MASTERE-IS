@@ -8,7 +8,7 @@ import com.ingesup.model.User;
 public class AuthenticationController extends HttpServletUtils {
 
 	public void login(){
-		//TEST
+		
 		// 1. GET Method to display the login view form
 		if(this.request.getMethod().toUpperCase().equals("GET")){
 			

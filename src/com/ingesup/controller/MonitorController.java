@@ -9,7 +9,7 @@ import com.ingesup.model.History;
 import com.ingesup.state.ComponentState;
 
 public class MonitorController extends HttpServletUtils {
-	
+
 	public void monitor() {
 		
 		// 1. GET: request to load all recent history data and display on the monitor interface

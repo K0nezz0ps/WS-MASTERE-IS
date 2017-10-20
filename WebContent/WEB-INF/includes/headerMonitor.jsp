@@ -6,11 +6,12 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="refresh" content="10">
 	<title>IngéSup - ${title}</title>
 </head>
 
 <header>
-	JEE Mastère IngéSup Header
+	JEE Mastère IngéSup Monitor Header
 </header>
 
 <body>

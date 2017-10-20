@@ -11,8 +11,8 @@ public class UserManager {
 		
 		try {
 			
-			Query query = HibernateUtil.getSession().createQuery("from User where email=:email and password=:password");
-			query.setParameter("email", user.getEmail().toLowerCase());
+			Query query = HibernateUtil.getSession().createQuery("from User where mail=:mail and password=:password");
+			query.setParameter("mail", user.getMail().toLowerCase());
 			query.setParameter("password", user.getPassword());
 			
 			User aliveUser = null;

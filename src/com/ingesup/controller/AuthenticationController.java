@@ -90,5 +90,7 @@ public class AuthenticationController extends HttpServletUtils {
 		// 2. Attempt to redirect on the monitor (to redirect on login page)
 		this.redirect("/WS-MASTERE-IS/monitor");
 		
+		// 3 .com
+		
 	}
 }

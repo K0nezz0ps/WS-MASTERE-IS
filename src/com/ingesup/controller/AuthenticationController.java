@@ -52,7 +52,7 @@ public class AuthenticationController extends HttpServletUtils {
 		else{
 			
 			User user = new User();
-			user.setEmail(email);
+			user.setMail(email);
 			user.setPassword(password);
 			
 			// 2b.1 Search for the requested user
@@ -67,7 +67,7 @@ public class AuthenticationController extends HttpServletUtils {
 			else {
 				this.request.setAttribute("validation", "Successfully connected.");
 
-				this.request.getSession().setAttribute("email", currentUser.getEmail());
+				this.request.getSession().setAttribute("email", currentUser.getMail());
 				this.request.getSession().setAttribute("isConnected", true);
 				
 				this.redirect("/WS-MASTERE-IS/monitor");

@@ -3,7 +3,7 @@ package com.ingesup.data;
 import java.util.Date;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+// TEST
 @Data
 @NoArgsConstructor
 public class HistoryUpdateData {

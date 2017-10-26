@@ -6,21 +6,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name="park")
-public class Park {
+@Table(name="user")
+public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column
-	private Integer id_user;
+	private String mail;
 	
 	@Column
-	private String roomIds;
+	private String password;
 
 }

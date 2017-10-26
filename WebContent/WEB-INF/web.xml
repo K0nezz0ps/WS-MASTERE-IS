@@ -23,6 +23,16 @@
     <url-pattern>/update</url-pattern>
   </servlet-mapping>
   
+   <!-- Servlet to DISPLAY, CREATE & GET the Park  -->
+  <servlet>
+    <servlet-name>ParkController</servlet-name>
+    <servlet-class>com.ingesup.controller.ParkController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ParkController</servlet-name>
+    <url-pattern>/park</url-pattern>
+  </servlet-mapping>
+  
   <!-- Servlet to DISPLAY & MODIFY the Monitor -->
   <servlet>
   	<servlet-name>MonitorController</servlet-name>

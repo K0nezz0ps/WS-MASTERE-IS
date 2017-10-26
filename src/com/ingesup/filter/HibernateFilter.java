@@ -83,4 +83,44 @@ public class HibernateFilter implements Filter {
 		}
 	}
 
+	
+	public static boolean isActiveSession(HttpServletRequest request) {
+        
+        // 1. Getting cookies
+        Cookie[] cookieList = request.getCookies();
+        
+        // 2. Trying to find the "isConnected" cookie
+        Cookie requestCookie = null;
+        if(cookieList != null)
+            for(Cookie currentCookie : cookieList){
+                if(currentCookie.getName().equals("isConnected")){
+                    requestCookie = currentCookie;
+                    break;
+                }
+            }
+        
+        // 3. Checking that the cookie value is set to true
+        if( requestCookie == null || !requestCookie.getValue().equals("true") )
+            return false;
+        
+        return true;
+    }
+	
+	public static String getCookieEmail(HttpServletRequest req) {
+		Cookie[] cookies = req.getCookies();
+		Cookie emailCookie = null;
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("email")) {
+					emailCookie = cookie;
+					break;
+				}
+			}
+		}
+		
+		if(emailCookie != null)
+			return emailCookie.getValue();
+		
+		return null;
+	}
 }

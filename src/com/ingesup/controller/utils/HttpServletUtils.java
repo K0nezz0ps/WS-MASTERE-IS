@@ -25,7 +25,7 @@ public abstract class HttpServletUtils extends HttpServlet {
 		if(this.view == null || this.view.length() == 0) {
 			this.view = this.getClass().getMethods()[0].getName();
 		}
-			
+
 		Method currentMethod = Arrays.asList(this.getClass().getMethods()).stream().filter(x -> x.getName().equals(this.view)).findFirst().orElse(null);
 
 		try {

@@ -2,8 +2,7 @@ package com.ingesup.manager;
 
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
-
-import com.ingesup.hibernate.HibernateUtil;
+import com.ingesup.hibernate.HibernateUtilMastere;
 import com.ingesup.model.Machine;
 
 public class MachineManager {
@@ -17,7 +16,7 @@ public class MachineManager {
 		
 		try {
 			
-			Query query = HibernateUtil.getSession().createQuery("from Machine where machineIp=:machineIp");
+			Query query = HibernateUtilMastere.getSession().createQuery("from Machine where machineIp=:machineIp");
 			query.setParameter("machineIp", ip);
 			
 			Machine machine = (Machine) query.uniqueResult();

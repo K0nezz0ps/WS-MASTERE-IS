@@ -1,11 +1,9 @@
 package com.ingesup.manager;
 
 import java.util.List;
-
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
-
-import com.ingesup.hibernate.HibernateUtil;
+import com.ingesup.hibernate.HibernateUtilMastere;
 import com.ingesup.model.History;
 
 public class HistoryManager {
@@ -18,7 +16,7 @@ public class HistoryManager {
 		
 		try {
 			
-			HibernateUtil.getSession().save(historyItem);
+			HibernateUtilMastere.getSession().save(historyItem);
 			
 		} catch(HibernateException e){
 			e.printStackTrace();
@@ -34,7 +32,7 @@ public class HistoryManager {
 		
 		try {
 			
-			Query query = HibernateUtil.getSession().createQuery("select h.* from Machine m join History h on h.id_machine=m.id and h.dateEvent=(select max(h1.dateEvent) from History h1 where h1.id_machine=h.id_machine)");
+			Query query = HibernateUtilMastere.getSession().createQuery("select h.* from Machine m join History h on h.id_machine=m.id and h.dateEvent=(select max(h1.dateEvent) from History h1 where h1.id_machine=h.id_machine)");
 			
 			List<History> list = (List<History>) query.list();
 			

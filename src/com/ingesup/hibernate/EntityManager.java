@@ -9,8 +9,8 @@ public abstract class EntityManager {
 		
 		try{
 
-			HibernateUtil.getSession().save(object);
-			HibernateUtil.getSession().refresh(object);
+			HibernateUtilMastere.getSession().save(object);
+			HibernateUtilMastere.getSession().refresh(object);
 
 			return null;
 			
@@ -26,7 +26,7 @@ public abstract class EntityManager {
 		try {
 
 			for(T obj : listObject)
-				HibernateUtil.getSession().save(obj);
+				HibernateUtilMastere.getSession().save(obj);
 
 			return;
 			
@@ -40,7 +40,7 @@ public abstract class EntityManager {
 	public static <T> void update(T object){
 		
 		try {
-			HibernateUtil.getSession().update(object);
+			HibernateUtilMastere.getSession().update(object);
 
 		} catch (HibernateException e){
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public abstract class EntityManager {
 		try {
 			
 			for(T obj : listObject)
-				HibernateUtil.getSession().update(obj);
+				HibernateUtilMastere.getSession().update(obj);
 
 		} catch (HibernateException e){
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public abstract class EntityManager {
 	public static <T> void delete(T object) {
 
 		try {
-			HibernateUtil.getSession().delete(object);
+			HibernateUtilMastere.getSession().delete(object);
 		} catch (HibernateException e){
 			e.printStackTrace();
 

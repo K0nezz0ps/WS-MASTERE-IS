@@ -19,24 +19,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import com.ingesup.hibernate.HibernateUtil;
+import com.ingesup.hibernate.HibernateUtilAuth;
+import com.ingesup.hibernate.HibernateUtilMastere;
 
 public class HibernateFilter implements Filter {
-	
-	private static final SessionFactory sessionFactory;
-	
-	// Instance the SessionFactory
-	static{
-		final StandardServiceRegistry registry =
-				new StandardServiceRegistryBuilder()
-					.configure("hibernate.cfg.xml")
-					.build();
-		
-		Metadata meta = new MetadataSources(registry)
-				.getMetadataBuilder().build();
-		
-		sessionFactory = meta.getSessionFactoryBuilder().build();
-	}
 
 	@Override
 	public void destroy() {
@@ -86,14 +72,14 @@ public class HibernateFilter implements Filter {
 	 */
 	public void cleanHibernateExchange() {
 		try{
-			if(this.sessionFactory.getCurrentSession().getTransaction().isActive())
-				this.sessionFactory.getCurrentSession().getTransaction().commit();
+			if(HibernateUtilMastere.getSession().getTransaction().isActive())
+				HibernateUtilMastere.getSession().getTransaction().commit();
 		} catch (Exception e){
-			this.sessionFactory.getCurrentSession().getTransaction().rollback();
+			HibernateUtilMastere.getSession().getTransaction().rollback();
 			e.printStackTrace();
 		} finally {
-			if(this.sessionFactory.getCurrentSession().isOpen())
-				this.sessionFactory.getCurrentSession().close();
+			if(HibernateUtilMastere.getSession().isOpen())
+				HibernateUtilMastere.getSession().close();
 		}
 	}
 

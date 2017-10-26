@@ -36,17 +36,7 @@ public class HibernateFilter implements Filter {
 		HttpServletRequest request   = (HttpServletRequest) arg0;
 		
 		// 1. Getting the Session value that define if a session is alive
-		Cookie[] cookieList = request.getCookies();
-		
-		Cookie requestCookie = null;
-		if(cookieList != null)
-			for(Cookie currentCookie : cookieList){
-				if(currentCookie.getName().equals("isConnected"))
-					requestCookie = currentCookie;
-			}
-		
-		// 2. If no user connected, redirect to the login page
-		if( requestCookie == null || !requestCookie.getValue().equals("true") ){
+		if(!isActiveSession(request)){
 			((HttpServletResponse) arg1).sendRedirect("/WS-CNS-AUTH/auth/login");
 			return;
 		}
@@ -81,6 +71,33 @@ public class HibernateFilter implements Filter {
 			if(HibernateUtilMastere.getSession().isOpen())
 				HibernateUtilMastere.getSession().close();
 		}
+	}
+	
+	/**
+	 * Return the boolean accorded to the active session status
+	 * @param request
+	 * @return
+	 */
+	public static boolean isActiveSession(HttpServletRequest request) {
+		
+		// 1. Getting cookies
+		Cookie[] cookieList = request.getCookies();
+		
+		// 2. Trying to find the "isConnected" cookie
+		Cookie requestCookie = null;
+		if(cookieList != null)
+			for(Cookie currentCookie : cookieList){
+				if(currentCookie.getName().equals("isConnected")){
+					requestCookie = currentCookie;
+					break;
+				}
+			}
+		
+		// 3. Checking that the cookie value is set to true
+		if( requestCookie == null || !requestCookie.getValue().equals("true") )
+			return false;
+		
+		return true;
 	}
 
 }

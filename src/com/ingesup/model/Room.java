@@ -17,7 +17,10 @@ public class Room {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name="nom")
-	private String nom;
+	@Column
+	private String name;
+	
+	@Column
+	private Integer id_park;
 
 }

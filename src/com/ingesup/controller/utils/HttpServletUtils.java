@@ -22,10 +22,10 @@ public abstract class HttpServletUtils extends HttpServlet {
 		this.response 	= response;
 		
 		
-		if(this.view == null || this.view.length() == 0) {
-			this.view = this.getClass().getMethods()[0].getName();
-		}
 
+		if(this.view == null || this.view.length() == 0)
+			this.view = this.getControllerMainClass().getName();
+			
 		Method currentMethod = Arrays.asList(this.getClass().getMethods()).stream().filter(x -> x.getName().equals(this.view)).findFirst().orElse(null);
 
 		try {
@@ -135,6 +135,31 @@ public abstract class HttpServletUtils extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	protected void sendError(Integer code){
+		
+		try{
+			this.response.sendError(code);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+
+	protected Method getControllerMainClass() {
+		
+		String className = this.getClass().getName().toLowerCase().substring(this.getClass().getName().lastIndexOf('.')+1, this.getClass().getName().toLowerCase().lastIndexOf("controller"));;
+		
+		for(Method currentMethod : this.getClass().getMethods()){
+			
+			String currentMethodName = currentMethod.getName().toLowerCase();
+			 
+			if(currentMethodName.equals(className))
+				return currentMethod;
+		}
+		
+		return this.getClass().getMethods()[0];
 	}
 }
 

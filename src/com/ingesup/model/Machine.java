@@ -19,7 +19,10 @@ public class Machine {
 	private Integer id;
 	
 	@Column
-	private Integer roomId;
+	private String machineIp;
+	
+	@Column
+	private Integer id_room;
 	
 	@Column
 	private Float ram;

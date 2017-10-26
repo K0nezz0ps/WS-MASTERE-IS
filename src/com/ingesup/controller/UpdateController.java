@@ -45,7 +45,7 @@ public class UpdateController extends HttpServletUtils {
 		
 		// 4. Creating a new History line
 		History historyItem = new History();
-		historyItem.setMachineId(currentMachine.getId());
+		historyItem.setId_machine(currentMachine.getId());
 		historyItem.setDateEvent(dataParams.getDateEvent());
 		historyItem.setCpuState(ComponentState.forValue(dataParams.getCpuPercentage()));
 		historyItem.setRamState(ComponentState.forValue(dataParams.getRamPercentage()));

@@ -43,6 +43,18 @@
   	<url-pattern>/monitor</url-pattern>
   </servlet-mapping>
   
+    <!-- Servlet to GET & POST the Machine -->
+  <servlet>
+  	<servlet-name>MachineController</servlet-name>
+  	<servlet-class>com.ingesup.controller.MachineController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>MachineController</servlet-name>
+  	<url-pattern>/machine</url-pattern>
+  </servlet-mapping>
+  
+  
+  
   <!-- Filter to restrict the access on the Monitor interface -->
   <filter>
     <filter-name>HibernateFilter</filter-name>

@@ -37,7 +37,6 @@
 			<mapping class="com.ingesup.model.History"/>
 			<mapping class="com.ingesup.model.Park"/>
 			<mapping class="com.ingesup.model.Room"/>
-			<mapping class="com.ingesup.model.User"/>
 			<mapping class="com.ingesup.model.Machine"/>
 			
 		</session-factory>

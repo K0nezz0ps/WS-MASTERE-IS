@@ -30,11 +30,11 @@ public class MonitorController extends HttpServletUtils {
 		
 		// PROTO: Static list
 		List<History> recentList = new ArrayList<>();
-		recentList.add(new History(null, new Date(), 2, ComponentState.HEAVEN	, ComponentState.VERYGOOD	, ComponentState.HEAVEN));
+		/*recentList.add(new History(null, new Date(), 2, ComponentState.HEAVEN	, ComponentState.VERYGOOD	, ComponentState.HEAVEN));
 		recentList.add(new History(null, new Date(), 3, ComponentState.ALERT	, ComponentState.RAISED		, ComponentState.ALERT));
 		recentList.add(new History(null, new Date(), 4, ComponentState.ALERT	, ComponentState.VERYGOOD	, ComponentState.RAISED));
 		recentList.add(new History(null, new Date(), 5, ComponentState.HEAVEN	, ComponentState.RAISED		, ComponentState.HEAVEN));
-		recentList.add(new History(null, new Date(), 6, ComponentState.VERYGOOD	, ComponentState.HEAVEN		, ComponentState.VERYGOOD));
+		recentList.add(new History(null, new Date(), 6, ComponentState.VERYGOOD	, ComponentState.HEAVEN		, ComponentState.VERYGOOD));*/
 		
 		if(recentList == null)
 			return;

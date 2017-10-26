@@ -8,7 +8,7 @@ public enum ComponentState {
 	HEAVEN,		// 66% to 85%	 - Color: hard orange 	#f5a000
 	ALERT;		// More than 86% - Color: red 			#ff0000
 	
-	public static ComponentState forValue(Integer percentage){
+	public static ComponentState forValue(Double percentage){
 		
 		if(percentage == null)
 			return null;

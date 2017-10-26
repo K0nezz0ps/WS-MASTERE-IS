@@ -34,7 +34,6 @@ public class HibernateFilter implements Filter {
 	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException, ServletException {
 
 		HttpServletRequest request   = (HttpServletRequest) arg0;
-		
 		// 1. Getting the Session value that define if a session is alive
 		if(!isActiveSession(request)){
 			((HttpServletResponse) arg1).sendRedirect("/WS-CNS-AUTH/auth/login");

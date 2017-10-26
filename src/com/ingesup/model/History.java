@@ -36,7 +36,7 @@ public class History {
 	private ComponentState ramState;
 	
 	@Column
-	private ComponentState storageState;
+	private String storageState;
 	
 
 }

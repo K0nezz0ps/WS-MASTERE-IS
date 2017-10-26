@@ -34,7 +34,7 @@
 					<thead><th>Date</th><th>Machine ID</th><th>CPU</th><th>RAM</th><th>Storage</th></thead>
 					<tbody>
 						<c:forEach items="${historyList}" var="historyLine">
-							<tr><td>${historyLine.dateEvent}</td><td>${historyLine.machineId}</td><td <c:if test="${historyLine.cpuState == ComponentState.VERYGOOD}">style="color: #1ed000;"</c:if>>${historyLine.cpuState}<td>${historyLine.ramState}</td><td>${historyLine.storageState}</td></tr>
+							<tr><td>${historyLine.dateEvent}</td><td>${historyLine.id_machine}</td><td <c:if test="${historyLine.cpuState == ComponentState.VERYGOOD}">style="color: #1ed000;"</c:if>>${historyLine.cpuState}<td>${historyLine.ramState}</td><td>${historyLine.storageState}</td></tr>
 						</c:forEach>
 					</tbody>
 				</table>

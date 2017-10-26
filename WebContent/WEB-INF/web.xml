@@ -6,11 +6,11 @@
       <url-pattern>*.jsp</url-pattern>
       <scripting-invalid>true</scripting-invalid>
     </jsp-property-group>
-    <jsp-property-group>
-      <url-pattern>*.jsp</url-pattern>
-      <include-prelude>/WEB-INF/includes/header.jsp</include-prelude>
-      <include-coda>/WEB-INF/includes/footer.jsp</include-coda>
-    </jsp-property-group>
+<!--     <jsp-property-group> -->
+<!--       <url-pattern>*.jsp</url-pattern> -->
+<!--       <include-prelude>/WEB-INF/includes/header.jsp</include-prelude> -->
+<!--       <include-coda>/WEB-INF/includes/footer.jsp</include-coda> -->
+<!--     </jsp-property-group> -->
   </jsp-config>
   
   <!-- Servlet to UPDATE & GET the History -->
@@ -31,16 +31,6 @@
   <servlet-mapping>
   	<servlet-name>MonitorController</servlet-name>
   	<url-pattern>/monitor</url-pattern>
-  </servlet-mapping>
-	
-  <!-- Servlet to authenticate users & logout -->
-  <servlet>
-  	<servlet-name>AuthenticationController</servlet-name>
-  	<servlet-class>com.ingesup.controller.AuthenticationController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>AuthenticationController</servlet-name>
-  	<url-pattern>/auth/*</url-pattern>
   </servlet-mapping>
   
   <!-- Filter to restrict the access on the Monitor interface -->

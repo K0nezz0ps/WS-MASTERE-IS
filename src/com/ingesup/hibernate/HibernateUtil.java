@@ -17,7 +17,7 @@ public class HibernateUtil {
 	static{
 		final StandardServiceRegistry registry =
 				new StandardServiceRegistryBuilder()
-					.configure("/com/ingesup/model/hibernate.cfg.xml")
+					.configure("hibernate.cfg.xml")
 					.build();
 		
 		Metadata meta = new MetadataSources(registry)

@@ -31,7 +31,7 @@ public class HibernateFilter implements Filter {
 		
 		// 2. If no user connected, redirect to the login page
 		if( !isConnected ){
-			((HttpServletResponse) arg1).sendRedirect("/WS-MASTERE-IS/auth/login");
+			((HttpServletResponse) arg1).sendRedirect("/WS-CNS-AUTH/auth/login");
 			return;
 		}
 		

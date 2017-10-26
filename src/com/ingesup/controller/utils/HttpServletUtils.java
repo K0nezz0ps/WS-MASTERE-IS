@@ -22,6 +22,7 @@ public abstract class HttpServletUtils extends HttpServlet {
 		this.response 	= response;
 		
 		
+
 		if(this.view == null || this.view.length() == 0)
 			this.view = this.getControllerMainClass().getName();
 			

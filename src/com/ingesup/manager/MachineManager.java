@@ -35,10 +35,10 @@ public class MachineManager {
 		
 		try {
 			
-			Query query = HibernateUtilMastere.getSession().createQuery("from Machine join Room on Machine.id_room=Room.id where Room.id_park=:parkId");
+			Query query = HibernateUtilMastere.getSession().createQuery("from Machine as m join Room as r on r.id=m.id_room where r.id_park=:parkId");
 			query.setParameter("parkId", parkId);
 			
-			List<Machine> machineList = query.list();
+			List<Machine> machineList = (List<Machine>) query.list();
 			
 			return machineList;
 		} catch(HibernateException e){

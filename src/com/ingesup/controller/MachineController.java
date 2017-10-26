@@ -48,12 +48,8 @@ public class MachineController extends HttpServletUtils {
 				
 				// 2.1.1 Load all the Machine for the requested parkId
 				List<Machine> machineList = MachineManager.getAll(parkId);
-				
-				for(Machine mch : machineList){
-					System.out.println(mch);
-				}
-					
-				
+			
+				System.out.println(machineList.size());
 			}
 			
 		}

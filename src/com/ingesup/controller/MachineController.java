@@ -1,13 +1,12 @@
 package com.ingesup.controller;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Map;
+import java.util.List;
 import java.util.Map.Entry;
 
 import com.ingesup.controller.utils.HttpServletUtils;
 import com.ingesup.filter.HibernateFilter;
+import com.ingesup.manager.MachineManager;
+import com.ingesup.model.Machine;
 
 public class MachineController extends HttpServletUtils {
 	
@@ -44,9 +43,16 @@ public class MachineController extends HttpServletUtils {
 		// 2. If valid input
 		if(parkId != null && selectMode != null){
 			
-			// 2.1 
+			// 2.1 If the selected mode is "all"
 			if(selectMode.equals("all")){
 				
+				// 2.1.1 Load all the Machine for the requested parkId
+				List<Machine> machineList = MachineManager.getAll(parkId);
+				
+				for(Machine mch : machineList){
+					System.out.println(mch);
+				}
+					
 				
 			}
 			

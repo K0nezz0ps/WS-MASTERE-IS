@@ -27,7 +27,7 @@ public class History {
 	private Date dateEvent;
 	
 	@Column
-	private Integer machineId;
+	private Integer id_machine;
 	
 	@Column
 	private ComponentState cpuState; 

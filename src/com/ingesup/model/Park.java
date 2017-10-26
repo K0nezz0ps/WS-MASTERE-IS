@@ -18,7 +18,7 @@ public class Park {
 	private Integer id;
 	
 	@Column
-	private Integer adminId;
+	private Integer id_user;
 	
 	@Column
 	private String roomIds;

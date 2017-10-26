@@ -13,7 +13,7 @@ monitorApp.controller('monitorMainController', function($scope, $rootScope, $htt
 	$scope.selectedMachine = null;
 	
 	// Loading all the machine in the current park
-	$http.get("/WS-MASTERE-IS/machine?parkId=6&selectMode=all").then(function(response){
+	$http.get("/WS-MASTERE-IS/machine?parkId=1&selectMode=all").then(function(response){
 			console.log(response);
 		});
 	

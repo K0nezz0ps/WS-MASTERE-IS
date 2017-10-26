@@ -25,19 +25,6 @@ public abstract class HttpServletUtils extends HttpServlet {
 		if(this.view == null || this.view.length() == 0) {
 			this.view = this.getClass().getMethods()[0].getName();
 		}
-		
-		// If the view contains one more /
-		if(this.view.indexOf("/") != -1){
-
-			String[] splitedView = this.view.split("/");
-			
-			if(splitedView.length != 2)
-				return;
-			
-			this.view = splitedView[0];
-			this.request.setAttribute("idPark", splitedView[1]);
-			
-		}
 			
 		Method currentMethod = Arrays.asList(this.getClass().getMethods()).stream().filter(x -> x.getName().equals(this.view)).findFirst().orElse(null);
 

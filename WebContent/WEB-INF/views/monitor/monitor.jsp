@@ -12,8 +12,9 @@
 		<!-- Import for JQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!-- Import for AngularJS -->
-<!-- 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script> -->
-		<!-- Monitor.js -->
+		<script src="/WS-MASTERE-IS/assets/libs/angular.min.js"></script>
+		<!-- Import Monitor.js -->
+		<script src="/WS-MASTERE-IS/assets/scripts/monitor.js"></script>
 		<script>
 		
 			$(document).ready(function(){

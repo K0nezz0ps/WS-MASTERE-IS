@@ -100,4 +100,23 @@ public class HibernateFilter implements Filter {
 		return true;
 	}
 
+	
+	
+	public static String getCookieEmail(HttpServletRequest req) {
+		Cookie[] cookies = req.getCookies();
+		Cookie emailCookie = null;
+		if(cookies != null) {
+			for(Cookie cookie : cookies) {
+				if(cookie.getName().equals("email")) {
+					emailCookie = cookie;
+					break;
+				}
+			}
+		}
+		
+		if(emailCookie != null)
+			return emailCookie.getValue();
+		
+		return null;
+	}
 }

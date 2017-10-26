@@ -38,6 +38,7 @@
 			<mapping class="com.ingesup.model.Park"/>
 			<mapping class="com.ingesup.model.Room"/>
 			<mapping class="com.ingesup.model.Machine"/>
+			<mapping class="com.ingesup.model.User"/>
 			
 		</session-factory>
 	</hibernate-configuration>

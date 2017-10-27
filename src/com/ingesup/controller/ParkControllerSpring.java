@@ -25,8 +25,10 @@ public class ParkControllerSpring {
 	public String park(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		// 1. Validating the user
-		if(!ControllerUtils.validateUser(request))
+		if(!ControllerUtils.validateUser(request)){
 			ControllerUtils.redirect("/WS-CNS-AUTH/login", response);
+			return null;
+		}
 		
 		// 2. Adding the park List to the attribute
 		model.addAttribute("parkList", new Gson().toJson(ParkManager.getParkListWithUserId(ParkManager.getUser(ControllerUtils.getCookieEmail(request)).getId())));
@@ -46,8 +48,10 @@ public class ParkControllerSpring {
     public String afficher(@PathVariable Integer parkId, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		// 1. Validating the user
-		if(!ControllerUtils.validateUser(request))
-			ControllerUtils.redirect("/WS-CNS-AUTH/auth/login", response);
+		if(!ControllerUtils.validateUser(request)){
+			ControllerUtils.redirect("/WS-CNS-AUTH/login", response);
+			return null;
+		}
 		
 		model.addAttribute("testModel", "hello, this is a example.");
 		

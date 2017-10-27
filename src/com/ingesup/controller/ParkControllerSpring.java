@@ -26,7 +26,7 @@ public class ParkControllerSpring {
 		
 		// 1. Validating the user
 		if(!ControllerUtils.validateUser(request))
-			ControllerUtils.redirect("/WS-CNS-AUTH/auth/login", response);
+			ControllerUtils.redirect("/WS-CNS-AUTH/login", response);
 		
 		// 2. Adding the park List to the attribute
 		model.addAttribute("parkList", new Gson().toJson(ParkManager.getParkListWithUserId(ParkManager.getUser(ControllerUtils.getCookieEmail(request)).getId())));

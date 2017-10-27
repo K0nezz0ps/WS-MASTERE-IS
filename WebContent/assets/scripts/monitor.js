@@ -33,10 +33,10 @@ monitorApp.controller('monitorMainController', function($scope, $rootScope, $htt
 			return;
 		
 		// Data for DELETE : only machine id
-		var data = {machineId: $scope.selectedMachine.id}
+		var data = {id: $scope.selectedMachine.id}
 		
 		// Sending DELETE request
-		$http.delete("/WS-MASTERE-IS/machine", data)
+		$http.delete("/rest/Machine", data)
 			.then(function(response) {
 
 				if(response != null)

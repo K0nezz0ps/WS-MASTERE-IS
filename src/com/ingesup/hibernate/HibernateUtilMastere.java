@@ -44,5 +44,22 @@ public class HibernateUtilMastere {
 		return session;
 		
 	}
+	
+	/**
+	 * Function that commit Transaction & close Session
+	 */
+	public void cleanHibernateExchange() {
+		
+		try{
+			if(HibernateUtilMastere.getSession().getTransaction().isActive())
+				HibernateUtilMastere.getSession().getTransaction().commit();
+		} catch (Exception e){
+			HibernateUtilMastere.getSession().getTransaction().rollback();
+			e.printStackTrace();
+		} finally {
+			if(HibernateUtilMastere.getSession().isOpen())
+				HibernateUtilMastere.getSession().close();
+		}
+	}
 
 }

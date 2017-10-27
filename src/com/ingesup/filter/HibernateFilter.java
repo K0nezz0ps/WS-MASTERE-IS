@@ -60,6 +60,7 @@ public class HibernateFilter implements Filter {
 	 * Function that commit Transaction & close Session
 	 */
 	public void cleanHibernateExchange() {
+		
 		try{
 			if(HibernateUtilMastere.getSession().getTransaction().isActive())
 				HibernateUtilMastere.getSession().getTransaction().commit();

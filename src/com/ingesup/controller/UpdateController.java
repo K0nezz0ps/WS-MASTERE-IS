@@ -2,15 +2,21 @@ package com.ingesup.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONObject;
 
 import com.ingesup.controller.utils.MapperUtils;
 import com.ingesup.controller.utils.HttpServletUtils;
 import com.ingesup.data.HistoryUpdateData;
+import com.ingesup.manager.DisksManager;
 import com.ingesup.manager.HistoryManager;
 import com.ingesup.manager.MachineManager;
+import com.ingesup.model.Disks;
 import com.ingesup.model.History;
 import com.ingesup.model.Machine;
 import com.ingesup.state.ComponentState;
@@ -21,7 +27,7 @@ public class UpdateController extends HttpServletUtils {
 	 * Update method dispatcher
 	 */
 	public void update() {
-		
+		System.out.println(this.request.getMethod().toUpperCase());
 		// 1. POST: in case of registering a new history
 		if(this.request.getMethod().toUpperCase().equals("POST")) {
 			System.out.println("data");
@@ -84,15 +90,31 @@ public class UpdateController extends HttpServletUtils {
 		
 		historyItem.setDateEvent(new Date());
 		historyItem.setId_machine(currentMachine.getId());
-		historyItem.setCpuState(ComponentState.forValue(cpu));
-		historyItem.setRamState(ComponentState.forValue(ram));
-		historyItem.setStorageState(disk);
+		historyItem.setCpuState(cpu);
+		historyItem.setRamState(ram);
 		
-		System.out.println(disk);
-		//historyItem.setStorageState(ComponentState.forValue(dataParams.getStoragePercentage()));
 		
 		// 5. Saving the new history line in database
 		HistoryManager.create(historyItem);
+		
+		
+		//------------------------------------------
+		List<String> disks=new ArrayList<>();
+		List<Disks> listdisks=new ArrayList<>();
+		
+		int id=HistoryManager.getlastidhistory((historyItem.getId_machine()));
+		
+		disks=Arrays.asList(disk.split(" "));
+		for (String d : disks) {
+			listdisks.add(new Disks(id,d.split("_")[0],Double.parseDouble(d.split("_")[1])));
+		}
+		for (Disks disks2 : listdisks) {
+			DisksManager.create(disks2);
+		}
+		//------------------------------------------
+		//historyItem.setStorageState(ComponentState.forValue(dataParams.getStoragePercentage()));
+		
+
 		
 		// 6. Return a 201 (Created) status
 		try {

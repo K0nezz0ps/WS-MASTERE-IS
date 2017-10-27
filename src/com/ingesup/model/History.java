@@ -30,13 +30,10 @@ public class History {
 	private Integer id_machine;
 	
 	@Column
-	private ComponentState cpuState; 
+	private Double cpuState; 
 
 	@Column
-	private ComponentState ramState;
-	
-	@Column
-	private String storageState;
+	private Double ramState;
 	
 
 }

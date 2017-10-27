@@ -17,7 +17,7 @@ public class HistoryManager {
 		try {
 			
 			HibernateUtilMastere.getSession().save(historyItem);
-			
+			HibernateUtilMastere.getSession().getTransaction().commit();
 		} catch(HibernateException e){
 			e.printStackTrace();
 		}
@@ -44,4 +44,19 @@ public class HistoryManager {
 		}
 		
 	}
+	public static Integer getlastidhistory(int id){
+		
+		try {
+			
+			Query query = HibernateUtilMastere.getSession().createQuery("SELECT max(id) FROM History WHERE id_machine="+id);
+			
+			return (Integer) query.getSingleResult();
+			
+		} catch (HibernateException e){
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
 }

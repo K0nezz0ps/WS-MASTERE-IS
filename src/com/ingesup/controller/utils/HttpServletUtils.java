@@ -43,7 +43,10 @@ public abstract class HttpServletUtils extends HttpServlet {
 		this.view		= this.action != null ? this.action.substring(1).toLowerCase() : null;
 		this.request 	= request;
 		this.response 	= response;
-			
+		
+		if(this.view == null || this.view.length() == 0)
+			this.view = this.getControllerMainClass().getName();
+		
 		Method currentMethod = Arrays.asList(this.getClass().getMethods()).stream().filter(x -> x.getName().equals(this.view)).findAny().orElse(null);
 
 		try {

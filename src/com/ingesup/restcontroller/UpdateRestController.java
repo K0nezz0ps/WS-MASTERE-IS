@@ -1,53 +1,38 @@
-package com.ingesup.controller;
+package com.ingesup.restcontroller;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import javax.servlet.annotation.WebServlet;
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
-
-import com.ingesup.controller.utils.MapperUtils;
-import com.ingesup.controller.utils.HttpServletUtils;
-import com.ingesup.controller.utils.MapperUtils;
-import com.ingesup.data.HistoryUpdateData;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import com.ingesup.manager.DisksManager;
 import com.ingesup.manager.HistoryManager;
 import com.ingesup.manager.MachineManager;
 import com.ingesup.model.Disks;
 import com.ingesup.model.History;
 import com.ingesup.model.Machine;
-import com.ingesup.state.ComponentState;
 
-//@WebServlet(urlPatterns = "/update")
-public class UpdateController extends HttpServletUtils {
-	
-	/**
-	 * Update method dispatcher
-	 */
-	public void update() {
-		System.out.println(this.request.getMethod().toUpperCase());
-		// 1. POST: in case of registering a new history
-		if(this.request.getMethod().toUpperCase().equals("POST")) {
-			System.out.println("data");
-			this.updatePost();
-		}
-		// 2. Else, throw a 404 Error
-		else
-			this.sendError(404, "Not implemented yet.");
-
-	}
+@RestController
+public class UpdateRestController {
 
 	/**
-	 * Update method that will register in database the computer history
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
 	 */
-	public void updatePost() {
-		
-	    double cpu=0;
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+    public ResponseEntity<?> updatePost(HttpServletRequest request, HttpServletResponse response) {
+
+		double cpu=0;
         double ram = 0;
         String disk = "";
 		String ip=request.getRemoteAddr();
@@ -67,14 +52,9 @@ public class UpdateController extends HttpServletUtils {
 	         disk = jObj.getString("Disk");
 
 	    } catch (Exception e) {
-	    	
+	    	e.printStackTrace();
 	    }
-		
-		
-		
-		//-------------------------------------
-		
-		
+
 //		// 1. Mapping all input data
 //		HistoryUpdateData dataParams = MapperUtils.historyUpdateDataMapper(this.request.getParameterMap());
 //		
@@ -82,10 +62,8 @@ public class UpdateController extends HttpServletUtils {
 		Machine currentMachine = MachineManager.getByIp(ip);
 		
 		// 3. If the machine does'nt exist, ignore
-		if(currentMachine == null){
-			System.out.println("No machine with the IP : " +ip);
-			return;
-		}
+		if(currentMachine == null)
+			return new ResponseEntity<>("No machine with the IP : " + ip, HttpStatus.NOT_FOUND);
 		
 		// 4. Creating a new History line
 		History historyItem = new History();
@@ -99,7 +77,6 @@ public class UpdateController extends HttpServletUtils {
 		
 		// 5. Saving the new history line in database
 		HistoryManager.create(historyItem);
-		
 		
 		//------------------------------------------
 		List<String> disks=new ArrayList<>();
@@ -117,15 +94,8 @@ public class UpdateController extends HttpServletUtils {
 		//------------------------------------------
 		//historyItem.setStorageState(ComponentState.forValue(dataParams.getStoragePercentage()));
 		
-
 		
-		// 6. Return a 201 (Created) status
-		try {
-			this.response.sendError(201);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
-
+		return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+	
 }

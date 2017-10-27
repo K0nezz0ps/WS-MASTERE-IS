@@ -18,11 +18,35 @@ monitorApp.controller('monitorMainController', function($scope, $rootScope, $htt
 			$scope.machineList = response.data;
 		});
 	
-	// Test for RestController /rest/Machine
-	$http.get("/WS-MASTERE-IS/rest/Machine", {id: 1, name: "hello"})
-		.then(function(response){
-			console.log(response);
-		}); 
+	$scope.getSelectedMachine = function() {
+		
+		console.log("Get : " + $scope.selectedMachine);
+		
+		if($scope.selectedMachine == null)
+			return;
+		
+		// Test for RestController /rest/Machine
+		$http.get("/WS-MASTERE-IS/rest/Machine?name=hello")
+			.then(function(response){
+				console.log(response);
+			}); 
+		
+	}
+	
+	$scope.postSelectedMachine = function() {
+		
+		console.log("Post : " + $scope.selectedMachine);
+		
+		if($scope.selectedMachine == null)
+			return;
+		
+		// Test for RestController /rest/Machine
+		$http.post("/WS-MASTERE-IS/rest/Machine?name=hello")
+			.then(function(response){
+				console.log(response);
+			}); 
+		
+	}
 	
 	// Delete a machine from the park
 	$scope.deleteSelectedMachine = function(){

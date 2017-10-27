@@ -11,7 +11,7 @@ import com.ingesup.manager.ParkManager;
 import com.ingesup.model.Park;
 import com.ingesup.model.User;
 
-@WebServlet(urlPatterns = "/park")
+//@WebServlet(urlPatterns = "/park")
 public class ParkController extends HttpServletUtils{
 
 	public void park() {

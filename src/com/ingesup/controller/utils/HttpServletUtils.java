@@ -119,7 +119,7 @@ public abstract class HttpServletUtils extends HttpServlet {
 		
 	}
 
-	protected void redirect(String uri){
+	public void redirect(String uri){
 		
 		try{
 			this.response.sendRedirect(uri);

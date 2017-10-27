@@ -1,7 +1,8 @@
 var parkApp = angular.module("parkApp", []);
 
 /**
- * monitorMainController (home page)
+ * parkMainController
+ * For the /park page
  */
 parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	
@@ -13,3 +14,14 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	}
 	
 });
+
+/**
+ * parkProfileController
+ * For the /park/{id} page
+ */
+parkApp.controlle('parkProfileController', function($scope, $rootScope, $http) {
+	
+	$scope.testValue = test;
+	
+});
+

@@ -71,4 +71,17 @@ public class ControllerUtils {
 		return null;
 	}
 
+	/**
+	 * Send error to client side
+	 * @param code
+	 */
+	public static void sendError(Integer code, HttpServletResponse response){
+		
+		try{
+			response.sendError(code);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
 }

@@ -28,27 +28,6 @@ public class ParkManager {
 	}
 	
 	/**
-	 * Return the id of a user with a given User mail, as a User
-	 * @return
-	 */
-	public static User getUser(String mail){
-		
-		try {
-			Query query = HibernateUtilMastere.getSession().createQuery("from User where mail=:uMail");
-			query.setParameter("uMail", mail);
-			
-			User idUser = (User) query.uniqueResult();
-
-			return idUser;
-			
-		} catch (HibernateException e){
-			e.printStackTrace();
-			return null;
-		}
-		
-	}
-	
-	/**
 	 * Return the list park with a given User id, as a java.util.List
 	 * @return
 	 */
@@ -65,6 +44,31 @@ public class ParkManager {
 		} catch (HibernateException e){
 			e.printStackTrace();
 			return null;
+		}
+		
+	}
+	
+	/**
+	 * Return the Park attached to the given id, else null
+	 * @param parkId
+	 * @return
+	 */
+	public static Park getPark(Integer parkId){
+		
+		try {
+			
+			Query query = HibernateUtilMastere.getSession().createQuery("from Park where id=:parkId");
+			query.setParameter("parkId", parkId);
+			
+			Park park = (Park) query.uniqueResult();
+			
+			return park;
+			
+		} catch(HibernateException e){
+			e.printStackTrace();
+			return null;
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
 		}
 		
 	}

@@ -1,15 +1,12 @@
 package com.ingesup.controller;
 
 import java.util.List;
-
-import javax.servlet.annotation.WebServlet;
-
 import com.google.gson.Gson;
 import com.ingesup.controller.utils.HttpServletUtils;
 import com.ingesup.filter.HibernateFilter;
 import com.ingesup.manager.ParkManager;
+import com.ingesup.manager.UserManager;
 import com.ingesup.model.Park;
-import com.ingesup.model.User;
 
 //@WebServlet(urlPatterns = "/park")
 public class ParkController extends HttpServletUtils{
@@ -29,7 +26,7 @@ public class ParkController extends HttpServletUtils{
 			String mailUser = HibernateFilter.getCookieEmail(this.request);
 			
 			// 2.2 Loading park(s) list
-			parkList = ParkManager.getParkListWithUserId(ParkManager.getUser(mailUser).getId());
+			parkList = ParkManager.getParkListWithUserId(UserManager.getUser(mailUser).getId());
 			
 			// 2.3 Adding to jsp model
 			this.request.setAttribute("parkList", new Gson().toJson(parkList));

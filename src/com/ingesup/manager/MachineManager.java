@@ -48,5 +48,30 @@ public class MachineManager {
 		}
 		
 	}
+	
+	/**
+	 * Return the whole list of machine attached to the given room ids list
+	 * @param roomIdsList
+	 * @return
+	 */
+	public static List<Machine> getAllByRoomIds(List<Integer> roomIdsList) {
+		
+		try {
+			
+			Query query = HibernateUtilMastere.getSession().createQuery("from Machine where id_room in :roomIdsList");
+			query.setParameterList("roomIdsList", roomIdsList);
+			
+			List<Machine> machineList = query.list();
+			
+			return machineList;
+			
+		} catch (HibernateException e){
+			e.printStackTrace();
+			return null;
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
+		}
+
+	}
 
 }

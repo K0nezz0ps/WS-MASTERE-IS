@@ -40,7 +40,23 @@ public class MachineRestController {
 	@RequestMapping(value="/rest/Machine", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> machinePost(@RequestParam("name") String name){
 		
+		//TODO: moove room for machine
 		System.out.println("MACHINE POST");
+		System.out.println(name);
+		
+		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+	}
+	
+	/**
+	 * DELETE Method to erase a machine from a room
+	 * @param name
+	 * @return
+	 */
+	@RequestMapping(value="/rest/Machine", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> machineDelete(@RequestParam("name") String name){
+		
+		//TODO: delete machine from room
+		System.out.println("MACHINE DELETE");
 		System.out.println(name);
 		
 		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);

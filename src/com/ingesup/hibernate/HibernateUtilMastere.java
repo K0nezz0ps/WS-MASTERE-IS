@@ -48,7 +48,7 @@ public class HibernateUtilMastere {
 	/**
 	 * Function that commit Transaction & close Session
 	 */
-	public void cleanHibernateExchange() {
+	public static void cleanHibernateExchange() {
 		
 		try{
 			if(HibernateUtilMastere.getSession().getTransaction().isActive())

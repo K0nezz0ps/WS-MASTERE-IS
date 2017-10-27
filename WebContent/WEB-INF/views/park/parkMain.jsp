@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html ng-app="monitorApp">
+<html ng-app="parkApp">
 	<head>
 		<!-- UTF-8 -->
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -19,8 +19,9 @@
 		
 		<script>
 		
-			var test = ${testModel};
-		
+			var roomList = ${roomList};
+			var currentPark = ${currentPark};
+
 		</script>
 		
 		<!-- Import Park.js -->
@@ -34,9 +35,22 @@
 
 	<body ng-controller="parkProfileController">
 	
-		<h1>PARK</h1>
+		<a href="/WS-MASTERE-IS/park">Go back</a>
+	
+		<h1>PARK </h1>
 		
-		Test value = <p>{{testValue}}</p>
+		<div style="border: 1px solid black" ng-repeat="room in roomList">
+		
+			<a style="cursor: pointer; border:1px solid grey;" href="/WS-MASTERE-IS/park/{{currentPark.id}}/{{room.id}}" >Room name : {{room.name}}</p>
+		
+			<ul>
+				<li  style="cursor: pointer;" ng-repeat="machine in room.machineList">
+					{{machine.machineIp}}
+				</li>
+			</ul>
+		
+		</div>
+		
 		
 	</body>
 	

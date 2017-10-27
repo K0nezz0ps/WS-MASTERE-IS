@@ -18,6 +18,12 @@ monitorApp.controller('monitorMainController', function($scope, $rootScope, $htt
 			$scope.machineList = response.data;
 		});
 	
+	// Test for RestController /rest/Machine
+	$http.get("/WS-MASTERE-IS/rest/Machine", {id: 1, name: "hello"})
+		.then(function(response){
+			console.log(response);
+		}); 
+	
 	// Delete a machine from the park
 	$scope.deleteSelectedMachine = function(){
 		

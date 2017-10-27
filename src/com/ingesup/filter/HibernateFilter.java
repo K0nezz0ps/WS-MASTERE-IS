@@ -9,6 +9,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import com.ingesup.hibernate.HibernateUtilAuth;
 import com.ingesup.hibernate.HibernateUtilMastere;
 
+@WebFilter(servletNames="MonitorController")
 public class HibernateFilter implements Filter {
 
 	@Override

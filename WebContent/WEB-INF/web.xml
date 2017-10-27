@@ -14,56 +14,55 @@
   </jsp-config>
   
   <!-- Servlet to UPDATE & GET the History -->
-  <servlet>
-    <servlet-name>UpdateController</servlet-name>
-    <servlet-class>com.ingesup.controller.UpdateController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateController</servlet-name>
-    <url-pattern>/update</url-pattern>
-  </servlet-mapping>
+<!--   <servlet> -->
+<!--     <servlet-name>UpdateController</servlet-name> -->
+<!--     <servlet-class>com.ingesup.controller.UpdateController</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>UpdateController</servlet-name> -->
+<!--     <url-pattern>/update</url-pattern> -->
+<!--   </servlet-mapping> -->
   
    <!-- Servlet to DISPLAY, CREATE & GET the Park  -->
-  <servlet>
-    <servlet-name>ParkController</servlet-name>
-    <servlet-class>com.ingesup.controller.ParkController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ParkController</servlet-name>
-    <url-pattern>/park</url-pattern>
-  </servlet-mapping>
+<!--   <servlet> -->
+<!--     <servlet-name>ParkController</servlet-name> -->
+<!--     <servlet-class>com.ingesup.controller.ParkController</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>ParkController</servlet-name> -->
+<!--     <url-pattern>/park</url-pattern> -->
+<!--     <url-pattern>/park/*</url-pattern> -->
+<!--   </servlet-mapping> -->
   
   <!-- Servlet to DISPLAY & MODIFY the Monitor -->
-  <servlet>
-  	<servlet-name>MonitorController</servlet-name>
-  	<servlet-class>com.ingesup.controller.MonitorController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>MonitorController</servlet-name>
-  	<url-pattern>/monitor</url-pattern>
-  </servlet-mapping>
+<!--   <servlet> -->
+<!--   	<servlet-name>MonitorController</servlet-name> -->
+<!--   	<servlet-class>com.ingesup.controller.MonitorController</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--   	<servlet-name>MonitorController</servlet-name> -->
+<!--   	<url-pattern>/monitor</url-pattern> -->
+<!--   </servlet-mapping> -->
   
     <!-- Servlet to GET & POST the Machine -->
-  <servlet>
-  	<servlet-name>MachineController</servlet-name>
-  	<servlet-class>com.ingesup.controller.MachineController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>MachineController</servlet-name>
-  	<url-pattern>/machine</url-pattern>
-  </servlet-mapping>
-  
-  
+<!--   <servlet> -->
+<!--   	<servlet-name>MachineController</servlet-name> -->
+<!--   	<servlet-class>com.ingesup.controller.MachineController</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--   	<servlet-name>MachineController</servlet-name> -->
+<!--   	<url-pattern>/machine</url-pattern> -->
+<!--   </servlet-mapping> -->
   
   <!-- Filter to restrict the access on the Monitor interface -->
-  <filter>
-    <filter-name>HibernateFilter</filter-name>
-    <filter-class>com.ingesup.filter.HibernateFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>HibernateFilter</filter-name>
-	<servlet-name>MonitorController</servlet-name>
-  </filter-mapping>
+<!--   <filter> -->
+<!--     <filter-name>HibernateFilter</filter-name> -->
+<!--     <filter-class>com.ingesup.filter.HibernateFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>HibernateFilter</filter-name> -->
+<!-- 	<servlet-name>MonitorController</servlet-name> -->
+<!--   </filter-mapping> -->
   
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

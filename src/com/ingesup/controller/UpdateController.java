@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.annotation.WebServlet;
 
 import org.json.JSONObject;
 
 import com.ingesup.controller.utils.MapperUtils;
 import com.ingesup.controller.utils.HttpServletUtils;
+import com.ingesup.controller.utils.MapperUtils;
 import com.ingesup.data.HistoryUpdateData;
 import com.ingesup.manager.DisksManager;
 import com.ingesup.manager.HistoryManager;
@@ -21,6 +23,7 @@ import com.ingesup.model.History;
 import com.ingesup.model.Machine;
 import com.ingesup.state.ComponentState;
 
+@WebServlet(urlPatterns = "/update")
 public class UpdateController extends HttpServletUtils {
 	
 	/**

@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.annotation.WebServlet;
+
 import com.ingesup.controller.utils.HttpServletUtils;
 import com.ingesup.model.History;
 import com.ingesup.state.ComponentState;
 
+@WebServlet(name="MonitorController", urlPatterns = "/monitor")
 public class MonitorController extends HttpServletUtils {
-
+	
 	public void monitor() {
 		
 		// 1. GET: request to load all recent history data and display on the monitor interface

@@ -42,6 +42,14 @@
 			</div>
 		</c:if>
 		
+		<div>
+			Select a to delete of this park : 
+			<select ng-model="selectedMachine">
+				<option ng-repeat="machine in machineList" value="machine">Machine - {{machine.machineIp}}</option>
+			</select>
+			<button ng-click="deleteSelectedMachine()">Delete</button>
+		</div>
+		
 	</body>
 	
 	<footer>

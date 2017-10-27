@@ -1,5 +1,6 @@
 package com.ingesup.controller.utils;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +22,6 @@ public abstract class HttpServletUtils extends HttpServlet {
 		this.request 	= request;
 		this.response 	= response;
 		
-		
-
 		if(this.view == null || this.view.length() == 0)
 			this.view = this.getControllerMainClass().getName();
 			
@@ -148,6 +147,15 @@ public abstract class HttpServletUtils extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	protected void sendJsonResponse(String json) {
+		
+		try {
+			this.response.getOutputStream().println(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected Method getControllerMainClass() {

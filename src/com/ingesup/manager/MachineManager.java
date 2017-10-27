@@ -1,5 +1,6 @@
 package com.ingesup.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -34,8 +35,8 @@ public class MachineManager {
 	public static List<Machine> getAll(Integer parkId) {
 		
 		try {
-			
-			Query query = HibernateUtilMastere.getSession().createQuery("from Machine as m join Room as r on r.id=m.id_room where r.id_park=:parkId");
+		
+			Query query = HibernateUtilMastere.getSession().createQuery("from Machine as m where m.id_room in (select r.id from Room as r where r.id_park=:parkId)");
 			query.setParameter("parkId", parkId);
 			
 			List<Machine> machineList = (List<Machine>) query.list();

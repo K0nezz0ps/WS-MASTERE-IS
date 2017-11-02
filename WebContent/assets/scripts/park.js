@@ -9,10 +9,11 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	// Park(s) list
 	$scope.loadedParkList = parkList;
 	
-	$scope.displayParkList = function() {
-		console.log("hello");
+	// Switch the view to the clicked park
+	$scope.openParkView = function(parkId){
+		window.location.href = "/WS-MASTERE-IS/park/" + parkId;
 	}
-	
+
 });
 
 /**

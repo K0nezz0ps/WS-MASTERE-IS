@@ -1,10 +1,32 @@
 /* Main CSS File for the MONITOR Project */
 
-/* PARK Main page */
+.header-container {
+	height: 50px;
+	top: 0px;
+	border-bottom: 2px solid grey;
+	background-color: #26a69a;
+}
 
-/* PARK Room page */
+/* ============ PARK Main page ============ */
 
-/* Room profile page */
+.park-container {
+	margin: 4px;
+}
+.park-container:hover {
+	background-color: rgba(187, 234, 255, 0.46);
+}
+
+/* .room-container-min { */
+/* 	border: 1px solid grey; */
+/* 	margin: 4px; */
+/* 	width: 50px; */
+/* 	text-align: center; */
+/* 	display:inline; */
+/* } */
+
+/* ============ PARK Room page ============ */
+
+/* ============ Room profile page ============ */
 
 /* ============ TEXT COLOR CLASSES ============ */
 .alert-text {

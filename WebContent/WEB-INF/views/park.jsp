@@ -1,17 +1,20 @@
 <jsp:include page="headerRefresh.jsp"/>
 
-	<header>
-		JEE Mastère IngéSup Header
-	</header>
-
 	<body ng-controller="parkMainController">
-	
-	<ul>
-		<li ng-repeat="park in loadedParkList">
-			<a href="/WS-MASTERE-IS/park/{{park.id}}">Park : {{park.roomIds}}</a>
-		</li>
-	</ul>
-	
-	<button ng-click="displayParkList()">Display</button>
+		
+		<div class="container">
+		
+			<!-- ForEach park in the parkList -->
+			<div class="row park-container" style="cursor: pointer;"  ng-click="openParkView(parkObject.park.id)" ng-repeat="parkObject in loadedParkList">
+		
+				<div class="col s2">PARK {{parkObject.park.id}}</div>
+				
+				<!-- ForEach room in the currentPark -->
+				<div class="col s1" ng-repeat="room in parkObject.rooms">{{room.name}}</div>
+		
+			</div>
+		
+		</div>
+		
 	
 <jsp:include page="footer.jsp"/>

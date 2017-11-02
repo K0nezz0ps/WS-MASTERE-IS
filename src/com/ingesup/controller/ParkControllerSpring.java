@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.gson.Gson;
 import com.ingesup.controller.utils.ControllerUtils;
 import com.ingesup.dto.HistoryUpdateDto;
+import com.ingesup.dto.ParkListDto;
 import com.ingesup.dto.RoomDto;
 import com.ingesup.manager.MachineManager;
 import com.ingesup.manager.ParkManager;
@@ -48,8 +49,17 @@ public class ParkControllerSpring {
 			return null;
 		}
 		
-		// 2. Adding the park List to the attribute
-		model.addAttribute("parkList", new Gson().toJson(ParkManager.getParkListWithUserId(UserManager.getUser(ControllerUtils.getCookieEmail(request)).getId())));
+		// 2. Getting all park that the current user can see
+		List<Park> parkList = ParkManager.getParkListWithUserId(UserManager.getUser(ControllerUtils.getCookieEmail(request)).getId());
+		
+		List<ParkListDto.GetOutput> outputParkList = new ArrayList<>();
+		
+		// 3. ForEach park, getting the rooms objects attached
+		for(Park currentPark : parkList)
+			outputParkList.add(new ParkListDto.GetOutput(currentPark, RoomManager.getAllRoom(currentPark.getId())));
+		
+		// 4. Adding the park List to the attribute
+		model.addAttribute("parkList", new Gson().toJson(outputParkList));
         model.addAttribute("room", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("roomList", new Gson().toJson(new ArrayList<>()));

@@ -15,6 +15,10 @@
 		<script src="/WS-MASTERE-IS/assets/libs/angular.min.js"></script>
 		<!-- Import CSS -->
 		<link rel="stylesheet" type="text/css" href="/WS-MASTERE-IS/assets/styles/style.css"/>
+		<!-- Compiled and minified CSS -->
+ 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+	    <!-- Compiled and minified JavaScript -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 		<!-- Title -->
 		<title>IngéSup - Dashboard</title>
 		
@@ -32,3 +36,7 @@
 		<script src="/WS-MASTERE-IS/assets/scripts/park.js"></script>
 		
 	</head>
+	
+	<header class="header-container">
+		<a href="/WS-MASTERE-IS/park"><img src="/WS-MASTERE-IS/assets/images/ingesup_header_img.png" style="margin: 7px 0 7px 7px; height: 35px;"/></a>
+	</header>

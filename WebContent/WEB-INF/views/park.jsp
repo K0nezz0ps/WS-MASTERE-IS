@@ -12,18 +12,20 @@
 		<div class="container park-container">
 		
 			<!-- ForEach park in the parkList -->
-			<div class="row park-container park-line" style="cursor: pointer;"  ng-click="openParkView(parkObject.park.id)" ng-repeat="parkObject in loadedParkList">
+			<div class="row park-container park-line" style="cursor: pointer;" ng-repeat="parkObject in loadedParkList">
 		
-				<div class="col s2">PARK {{parkObject.park.id}}</div>
+				<div class="col s2" ng-click="openParkView(parkObject.park.id)">PARK {{parkObject.park.id}}</div>
 				
 				<!-- ForEach room in the currentPark -->
-				<div class="col s1" ng-repeat="room in parkObject.rooms">{{room.name}}</div>
-				
-				<div class="col s1"><input ng-click="selectPark(parkObject.park.id)" type="checkbox" id="test5" /></div>
+				<div class="col s1" ng-click="openParkView(parkObject.park.id)" ng-repeat="room in parkObject.rooms">{{room.name}}</div>
 		
+				<div style="float: right;"><input type="checkbox" ng-click="selectPark(parkObject.park.id)" class="filled-in" id="filled-in-box"/><label for="filled-in-box"></label></div>
+			
 			</div>
 		
 		</div>
+		
+	      
 		
 		<div class="park-create">
 			
@@ -41,6 +43,9 @@
 			
 			<div style="width: 35%; float: right;">
 				<a style="float: right;" ng-click="showDeletePark()" class="waves-effect waves-light btn"><i class="material-icons right">cancel</i>DELETE</a>
+				<select ng-model="selectedPark">
+					<option ng-repeat="parkObject in loadedParkList" ng-value="{{parkObject.park.id}}">PARK {{parkObject.park.id}}</option>
+				</select>
 	       		<a ng-if="deleteForm" style="margin-top: 20px; float: right; background-color: red;" ng-click="deletePark()" class="waves-effect waves-light btn"><i class="material-icons right">check</i>confirm ?</a>
 			</div>
        		

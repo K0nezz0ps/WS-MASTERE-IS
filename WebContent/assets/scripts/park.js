@@ -75,6 +75,10 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 		}
 	}
 	
+	$scope.selectPark = function(parkId){
+		console.log("selected : " + parkId);
+	}
+	
 	$scope.showDeletePark = function(){
 		$scope.deleteForm = !$scope.deleteForm;
 	}

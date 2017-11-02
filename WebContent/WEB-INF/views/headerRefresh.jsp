@@ -19,6 +19,8 @@
  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 	    <!-- Compiled and minified JavaScript -->
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+	   	<!-- Material icons -->
+	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!-- Title -->
 		<title>IngéSup - Dashboard</title>
 		
@@ -39,4 +41,5 @@
 	
 	<header class="header-container">
 		<a href="/WS-MASTERE-IS/park"><img src="/WS-MASTERE-IS/assets/images/ingesup_header_img.png" style="margin: 7px 0 7px 7px; height: 35px;"/></a>
+		<a id="logout" href="/WS-CNS-AUTH/logout"><i class="material-icons">power_settings_new</i></a>
 	</header>

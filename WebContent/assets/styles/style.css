@@ -6,23 +6,66 @@
 	border-bottom: 2px solid grey;
 	background-color: #26a69a;
 }
+	.header-container #logout {
+		float: right;
+		height: 48px;
+		width: 48px;
+		color: white;
+	}
+	.header-container i {
+		font-size: 30px;
+		margin-top: 8px;
+	}
+
+body {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.footer-container {
+	background-color: rgba(128, 128, 128, 0.34);
+	border: 2px solid grey;
+	text-align: center;
+	height: 110px;
+	bottom: 0px;
+}
+	.footer-container .footer-text {
+		font-size: 14px;
+		color: black;
+		font-weight: bold;
+		margin-top: 10px;
+	}
 
 /* ============ PARK Main page ============ */
 
 .park-container {
-	margin: 4px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
-.park-container:hover {
-	background-color: rgba(187, 234, 255, 0.46);
+.park-title {
+	text-align: center;
 }
+	.park-title h3 {
+		font-size: 22px;
+	}
+	.park-title i {
+		font-size: 16px;
+	}
+	
+.park-line {
+	border: 2px solid #26a69a;
+	border-radius: 4px;
+	font-weight: bold;
+	padding: 3px;
+}
+	.park-line:hover {
+		background-color: rgba(187, 234, 255, 0.46);
+	}
 
-/* .room-container-min { */
-/* 	border: 1px solid grey; */
-/* 	margin: 4px; */
-/* 	width: 50px; */
-/* 	text-align: center; */
-/* 	display:inline; */
-/* } */
+.park-create {
+	width: 200px;
+	margin: 30px auto 30px auto;
+}
 
 /* ============ PARK Room page ============ */
 

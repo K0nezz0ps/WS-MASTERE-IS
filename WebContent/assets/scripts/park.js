@@ -6,12 +6,49 @@ var parkApp = angular.module("parkApp", []);
  */
 parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	
-	// Park(s) list
-	$scope.loadedParkList = parkList;
+	$scope.loadedParkList     = parkList;		// Park(s) list
+	$scope.createParkButton   = "Create Park"; 	// Display name of the button
+	$scope.createParkIcon     = "control_point";// Display icon in the button
+	$scope.createPark         = false; 	  		// Boolean to display the creation park form
+	$scope.inputParkName      = "";				// Wanted input name for the created park
+	$scope.errorCreateMessage = "";				// Displayed message in case of error
+	$scope.validationCreateMessage = "";		// Displayed validation message
 	
 	// Switch the view to the clicked park
 	$scope.openParkView = function(parkId){
 		window.location.href = "/WS-MASTERE-IS/park/" + parkId;
+	}
+	
+	// Show/Hide the div with the Creation Park Form
+	$scope.showCreationPark = function(){
+		$scope.createPark = !$scope.createPark;
+		
+		if($scope.createPark){
+			$scope.createParkButton = "Cancel add";
+			$scope.createParkIcon   = "remove_circle_outline";
+		}
+		else{
+			$scope.createParkButton = "Create Park";
+			$scope.createParkIcon   = "control_point";
+		}
+			
+	}
+	
+	$scope.createPark = function(){
+		
+		$scope.showCreateError = false;
+		$scope.showCreateValidation = false;
+		
+		// Check if the name is invalid (empty, here)
+		if($scope.inputParkName.trim() == ""){
+			$scope.errorCreateMessage = "Invalid name";
+			$scope.showCreateError = true;
+			return;
+		}
+		
+		$scope.validationCreateMessage = "Created !";
+		$scope.showCreateValidation = true;
+		
 	}
 
 });

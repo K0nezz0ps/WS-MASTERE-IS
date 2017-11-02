@@ -9,35 +9,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingesup.hibernate.EntityManager;
+import com.ingesup.manager.MachineManager;
+import com.ingesup.model.Machine;
+
 @RestController
 public class MachineRestController {
 	
-	/**
-	 * GET Method to return the whole list of machine attached to the given park id
-	 * @param name
-	 * @return
-	 */
-	@RequestMapping(value="/rest/Machine", method = RequestMethod.GET)
-	public ResponseEntity<?> machineGet(@RequestParam("name") String name){
-		
-		System.out.println("MACHINE GET");
-		System.out.println(name);
-		
-		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
-	}
-	
+//	/**
+//	 * GET Method to return the whole list of machine attached to the given park id
+//	 * @param name
+//	 * @return
+//	 */
+//	@RequestMapping(value="/rest/Machine", method = RequestMethod.GET)
+//	public ResponseEntity<?> machineGet(@RequestParam("name") String name){
+//		
+//		System.out.println("MACHINE GET");
+//		System.out.println(name);
+//		
+//		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+//	}
+//	
 	/**
 	 * POST Method to switch a machine of park
 	 * @param name
 	 * @return
 	 */
 	@RequestMapping(value="/rest/Machine", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> machinePost(@RequestParam("name") String name){
+	public ResponseEntity<?> machinePost(@RequestParam("targetRoomId") Integer targetRoomId,@RequestParam("machineId") String machineId){
 		
 		//TODO: moove room for machine
 		System.out.println("MACHINE POST");
-		System.out.println(name);
-		
+		Machine m = MachineManager.getById(machineId);
+		m.setId_room(targetRoomId);
+		EntityManager.update(m);
 		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
 	}
 	
@@ -47,12 +52,12 @@ public class MachineRestController {
 	 * @return
 	 */
 	@RequestMapping(value="/rest/Machine", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> machineDelete(@RequestParam("name") String name){
+	public ResponseEntity<?> machineDelete(@RequestParam("machineId") String machineId){
 		
-		//TODO: delete machine from room
-		System.out.println("MACHINE DELETE");
-		System.out.println(name);
-		
+		//TODO: moove room for machine
+		System.out.println("MACHINE POST");
+		Machine m = MachineManager.getById(machineId);
+		EntityManager.delete(m);
 		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
 	}
 

@@ -32,6 +32,24 @@ public class MachineManager {
 
 	}
 	
+	public static Machine getById(String id){
+		
+		try {
+			
+			Query query = HibernateUtilMastere.getSession().createQuery("from Machine where id=:machineId");
+			query.setParameter("machineId", id);
+			
+			Machine machine = (Machine) query.uniqueResult();
+			
+			return machine;
+		} catch (HibernateException e){
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	
 	public static List<Machine> getAll(Integer parkId) {
 		
 		try {

@@ -1,0 +1,38 @@
+/* Main CSS File for the MONITOR Project */
+
+/* PARK Main page */
+
+/* PARK Room page */
+
+/* Room profile page */
+
+/* ============ TEXT COLOR CLASSES ============ */
+.alert-text {
+	color: #ff0000;
+	font-weight: bold;
+}
+
+.heaven-text {
+	color: #f5a000;
+	font-weight: bold;
+}
+
+.raised-text {
+	color :#ffe200;
+	font-weight: bold;
+}
+
+.average-text {
+	color: #fff900;
+	font-weight: bold;
+}
+
+.good-text {
+	color:#b2ff00;
+	font-weight: bold;
+}
+
+.verygood-text {
+	color: #1ed000;
+	font-weight: bold;
+}

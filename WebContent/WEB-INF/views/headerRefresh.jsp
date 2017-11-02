@@ -13,13 +13,17 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!-- Import for AngularJS -->
 		<script src="/WS-MASTERE-IS/assets/libs/angular.min.js"></script>
-
+		<!-- Import CSS -->
+		<link rel="stylesheet" type="text/css" href="/WS-MASTERE-IS/assets/styles/style.css"/>
 		<!-- Title -->
-		<title>IngéSup - Monitor</title>
+		<title>IngéSup - Dashboard</title>
 		
 		<script>
 		
-			var roomList = ${roomList};
+			var parkList 	= ${parkList};
+			var currentRoom = ${room};
+			var historyList = ${historyList};
+			var roomList    = ${roomList};
 			var currentPark = ${currentPark};
 
 		</script>
@@ -28,34 +32,3 @@
 		<script src="/WS-MASTERE-IS/assets/scripts/park.js"></script>
 		
 	</head>
-
-	<header>
-		JEE Mastère IngéSup Header
-	</header>
-
-	<body ng-controller="parkProfileController">
-	
-		<a href="/WS-MASTERE-IS/park">Go back</a>
-	
-		<h1>PARK </h1>
-		
-		<div style="border: 1px solid black" ng-repeat="room in roomList">
-		
-			<a style="cursor: pointer; border:1px solid grey;" href="/WS-MASTERE-IS/park/{{currentPark.id}}/{{room.id}}" >Room name : {{room.name}}</p>
-		
-			<ul>
-				<li  style="cursor: pointer;" ng-repeat="machine in room.machineList">
-					{{machine.machineIp}}
-				</li>
-			</ul>
-		
-		</div>
-		
-		
-	</body>
-	
-	<footer>
-		JEE Mastère Footer IngéSup
-	</footer>
-
-</html>

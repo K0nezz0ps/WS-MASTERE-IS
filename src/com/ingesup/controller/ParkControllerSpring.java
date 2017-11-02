@@ -40,10 +40,22 @@ public class ParkControllerSpring {
 	@RequestMapping(value="/park", method = RequestMethod.GET)
 	public String park(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
-		// 1. Adding the park List to the attribute
+//		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
+		// 1. Verifying that the current user is connected
+		if(!ControllerUtils.validateUser(request)){
+			ControllerUtils.redirect("/WS-CNS-AUTH/login", response);
+			return null;
+		}
+		
+		// 2. Adding the park List to the attribute
 		model.addAttribute("parkList", new Gson().toJson(ParkManager.getParkListWithUserId(UserManager.getUser(ControllerUtils.getCookieEmail(request)).getId())));
-        
-        return "/park/park";
+        model.addAttribute("room", new Gson().toJson(new ArrayList<>()));
+        model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
+        model.addAttribute("roomList", new Gson().toJson(new ArrayList<>()));
+        model.addAttribute("currentPark", new Gson().toJson(new ArrayList<>()));
+		
+        return "park";
 	}
 	
 	/**
@@ -92,8 +104,11 @@ public class ParkControllerSpring {
 		// 7. Adding model attributes
 		model.addAttribute("currentPark", new Gson().toJson(currentPark));
 		model.addAttribute("roomList", new Gson().toJson(outputList));
+		model.addAttribute("parkList", new Gson().toJson(new ArrayList<>()));
+        model.addAttribute("room", new Gson().toJson(new ArrayList<>()));
+        model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
 	
-		return "/park/parkMain";
+		return "parkMain";
 		
     }
 	
@@ -146,8 +161,10 @@ public class ParkControllerSpring {
 		model.addAttribute("room", new Gson().toJson(new RoomDto.GetOutput(currentRoom.getId(), currentRoom.getName(), currentRoom.getId_park(), machineList)));
 		model.addAttribute("historyList", new Gson().toJson(recentHistoryList));
 		model.addAttribute("roomList", new Gson().toJson(roomList));
+		model.addAttribute("currentPark", new Gson().toJson(new ArrayList<>()));
+		model.addAttribute("parkList", new Gson().toJson(new ArrayList<>()));
 		
-		return "/park/roomProfile";
+		return "roomProfile";
 		
     }
 

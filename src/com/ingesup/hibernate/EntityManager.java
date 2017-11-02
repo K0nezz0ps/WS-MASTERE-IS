@@ -16,8 +16,9 @@ public abstract class EntityManager {
 			
 		} catch (HibernateException e){
 			e.printStackTrace();
-
 			return null;
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
 		}
 	}
 	
@@ -33,6 +34,8 @@ public abstract class EntityManager {
 		} catch(HibernateException e){
 			e.printStackTrace();
 			return;
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
 		}
 		
 	}
@@ -40,11 +43,14 @@ public abstract class EntityManager {
 	public static <T> void update(T object){
 		
 		try {
+			
 			HibernateUtilMastere.getSession().update(object);
 
 		} catch (HibernateException e){
 			e.printStackTrace();
 			return;
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
 		}
 	}
 
@@ -58,7 +64,9 @@ public abstract class EntityManager {
 		} catch (HibernateException e){
 			e.printStackTrace();
 			return;
-		} 
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
+		}
 	}
 	
 	public static <T> void delete(T object) {
@@ -67,8 +75,9 @@ public abstract class EntityManager {
 			HibernateUtilMastere.getSession().delete(object);
 		} catch (HibernateException e){
 			e.printStackTrace();
-
 			return;
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
 		}
 	}
 

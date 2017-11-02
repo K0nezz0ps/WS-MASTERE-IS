@@ -39,7 +39,9 @@ parkApp.controller('roomProfileController', function($scope, $rootScope, $http) 
 	$scope.selectedNewRoom = null;
 	
 	$scope.deleteMachine = function(machine){
-		//TODO: http delete request /rest/Machine with machine id
+
+		// 
+		
 	}
 	
 	$scope.switchMachineRoom = function(machine) {
@@ -52,6 +54,20 @@ parkApp.controller('roomProfileController', function($scope, $rootScope, $http) 
 		
 	}
 	
+	// Function that return the color class accorded to the given ComponentState
+	$scope.getStateColorClass = function(state){
+
+		switch(state){
+		case "ALERT"	: return "alert-text";	  break;
+		case "HEAVEN" 	: return "heaven-text";	  break;
+		case "RAISED" 	: return "raised-text";	  break;
+		case "AVERAGE" 	: return "average-text";  break;
+		case "GOOD"		: return "good-text";	  break;
+		case "VERYGOOD"	: return "verygood-text"; break;
+		default: return "";
+		}
+		
+	}
 });
 
 

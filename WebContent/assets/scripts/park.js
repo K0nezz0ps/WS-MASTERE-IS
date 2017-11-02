@@ -9,10 +9,11 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	$scope.loadedParkList     = parkList;		// Park(s) list
 	$scope.createParkButton   = "Create Park"; 	// Display name of the button
 	$scope.createParkIcon     = "control_point";// Display icon in the button
-	$scope.createPark         = false; 	  		// Boolean to display the creation park form
-	$scope.inputParkName      = "";				// Wanted input name for the created park
+	$scope.parkForm           = false; 	  		// Boolean to display the creation park form
+	$scope.inputParkName      = "nameOfPark";				// Wanted input name for the created park
 	$scope.errorCreateMessage = "";				// Displayed message in case of error
 	$scope.validationCreateMessage = "";		// Displayed validation message
+	$scope.deleteForm		  = false;
 	
 	// Switch the view to the clicked park
 	$scope.openParkView = function(parkId){
@@ -21,9 +22,10 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	
 	// Show/Hide the div with the Creation Park Form
 	$scope.showCreationPark = function(){
-		$scope.createPark = !$scope.createPark;
 		
-		if($scope.createPark){
+		$scope.parkForm = !$scope.parkForm;
+		
+		if($scope.parkForm){
 			$scope.createParkButton = "Cancel add";
 			$scope.createParkIcon   = "remove_circle_outline";
 		}
@@ -36,6 +38,8 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	
 	$scope.createPark = function(){
 		
+		console.log($scope.inputParkName);
+		
 		$scope.showCreateError = false;
 		$scope.showCreateValidation = false;
 		
@@ -45,10 +49,34 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 			$scope.showCreateError = true;
 			return;
 		}
-		
-		$scope.validationCreateMessage = "Created !";
-		$scope.showCreateValidation = true;
-		
+		else{
+			
+			// Request to create the new park
+			$http.post("/WS-MASTERE-IS/rest/createPark?parkName=" + $scope.inputParkName)
+				.then(function(response){
+					console.log(response);
+					
+					if(response.status == 201){
+						$scope.validationCreateMessage = "Created !";
+						$scope.showCreateValidation = true;
+						
+						//TODO: add the new park in the $scope.loadedParkList
+					}
+					else{
+						$scope.errorCreateMessage = response.data;
+						$scope.showCreateError = true;
+					}
+						
+				});
+			
+			
+			
+
+		}
+	}
+	
+	$scope.showDeletePark = function(){
+		$scope.deleteForm = !$scope.deleteForm;
 	}
 
 });

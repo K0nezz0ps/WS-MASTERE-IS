@@ -1,7 +1,10 @@
 package com.ingesup.hibernate;
 
 import java.util.List;
+
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 public abstract class EntityManager {
 	
@@ -11,11 +14,12 @@ public abstract class EntityManager {
 
 			HibernateUtilMastere.getSession().save(object);
 			HibernateUtilMastere.getSession().refresh(object);
-
-			return null;
+			
+			return object;
 			
 		} catch (HibernateException e){
 			e.printStackTrace();
+			
 			return null;
 		} finally {
 			HibernateUtilMastere.cleanHibernateExchange();

@@ -18,6 +18,9 @@ public class Park {
 	private Integer id;
 	
 	@Column
+	private String name;
+	
+	@Column
 	private Integer id_user;
 	
 	@Column

@@ -1,4 +1,4 @@
-var parkApp = angular.module("parkApp", []);
+var parkApp = angular.module("parkApp", ['dndLists']);
 
 /**
  * parkMainController

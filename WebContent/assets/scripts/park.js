@@ -10,7 +10,7 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	$scope.createParkButton   = "Create Park"; 	// Display name of the button
 	$scope.createParkIcon     = "control_point";// Display icon in the button
 	$scope.parkForm           = false; 	  		// Boolean to display the creation park form
-	$scope.inputParkName      = "nameOfPark";				// Wanted input name for the created park
+	$scope.inputParkName      = "nameOfPark";	// Wanted input name for the created park
 	$scope.errorCreateMessage = "";				// Displayed message in case of error
 	$scope.validationCreateMessage = "";		// Displayed validation message
 	$scope.deleteForm		  = false;
@@ -36,6 +36,7 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 			
 	}
 	
+	// POST Request to create a park, display error in case of bad input or wrong request
 	$scope.createPark = function(){
 		
 		console.log($scope.inputParkName);
@@ -68,17 +69,15 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 					}
 						
 				});
-			
-			
-			
-
 		}
 	}
 	
+	// Select a park while clicking in a check box
 	$scope.selectPark = function(parkId){
 		console.log("selected : " + parkId);
 	}
 	
+	// Show/hide the button to confirm deletion of a park
 	$scope.showDeletePark = function(){
 		$scope.deleteForm = !$scope.deleteForm;
 	}
@@ -105,22 +104,9 @@ parkApp.controller('roomProfileController', function($scope, $rootScope, $http) 
 	$scope.currentRoom = currentRoom;
 	$scope.historyList = historyList;
 	$scope.roomList    = roomList;
-	
-	$scope.selectedNewRoom = null;
-	
 	$scope.deleteMachine = function(machine){
 
 		// 
-		
-	}
-	
-	$scope.switchMachineRoom = function(machine) {
-		
-		// If no selectedValue for the new room id
-		if($scope.selectedNewRoom)
-			return;
-		
-		//TODO: http post request /rest/Machine to switch room
 		
 	}
 	

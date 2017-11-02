@@ -1,23 +1,43 @@
 package com.ingesup.restcontroller;
 
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ingesup.hibernate.EntityManager;
+import com.ingesup.manager.ParkManager;
+import com.ingesup.model.Park;
 
 @RestController
 public class ParkRestController {
 	
-//	@RequestMapping(value="/rest/Park/{parkId}", method=RequestMethod.GET)
-//	public ResponseEntity<?> parkGetById(@PathVariable Integer parkId) {
-//		
-//		System.out.println(parkId + " SELECTED");
-//		
-//		return new ResponseEntity<>(HttpStatus.OK);
-//		
-//	}
+	/**
+	 * POST Function to create a Park
+	 * @param parkName
+	 * @return
+	 */
+	@RequestMapping(value="/rest/createPark", method= RequestMethod.POST)
+	public ResponseEntity<?> createPark(@RequestParam("parkName") String parkName){
+		
+		// 1. Trying to get a potential park with the same given parkName
+		Park testPark = ParkManager.get(parkName);
+		
+		// 2. If this name is already used, return error
+		if(testPark != null)
+			return new ResponseEntity<>("This name is already used.", HttpStatus.INTERNAL_SERVER_ERROR);
+		
+		// 3. Else, create the park
+		Park newPark = new Park();
+		newPark.setName(parkName);
+		ParkManager.create(newPark);
+		
+		newPark = ParkManager.get(parkName);
+		
+		return new ResponseEntity<>(newPark ,HttpStatus.CREATED);
+		
+	}
 
 }

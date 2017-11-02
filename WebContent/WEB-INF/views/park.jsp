@@ -18,23 +18,32 @@
 				
 				<!-- ForEach room in the currentPark -->
 				<div class="col s1" ng-repeat="room in parkObject.rooms">{{room.name}}</div>
+				
+				<div class="col s1"><input ng-click="selectPark(parkObject.park.id)" type="checkbox" id="test5" /></div>
 		
 			</div>
 		
 		</div>
 		
 		<div class="park-create">
-			<a ng-click="showCreationPark()" class="waves-effect waves-light btn"><i class="material-icons right">{{createParkIcon}}</i>{{createParkButton}}</a>
 			
-			<div ng-if="createPark">
-				<div class="input-field col s3">
-          			<input placeholder="Name" ng-model="inputParkName" type="text" class="validate">
-          			<label for="first_name">Park Name</label>
-          			<a ng-click="createPark()" class="waves-effect waves-light btn">Create</a>
-          			<p ng-if="showCreateError" style="color: red; font-size: 12px;">{{errorCreateMessage}}</p>
-          			<p ng-if="showCreateValidation" style="color: green; font-size: 12px;">{{validationCreateMessage}}</p>
-        		</div>
+			<div style="width: 60%; float: left;">
+				<a ng-click="showCreationPark()" class="waves-effect waves-light btn"><i class="material-icons right">{{createParkIcon}}</i>{{createParkButton}}</a>
+				
+				<div ng-if="parkForm" class="input-field">
+	       			<input id="park_name" ng-model="inputParkName" type="text" class="validate" style="width: 200px; margin-right: 10px;">
+	       			<label for="park_name">Park Name</label>
+	       			<a ng-click="createPark()" class="waves-effect waves-light btn">Create</a>
+	       			<p ng-if="showCreateError" style="color: red; font-size: 12px;">{{errorCreateMessage}}</p>
+	       			<p ng-if="showCreateValidation" style="color: green; font-size: 12px;">{{validationCreateMessage}}</p>
+	       		</div>
 			</div>
+			
+			<div style="width: 35%; float: right;">
+				<a style="float: right;" ng-click="showDeletePark()" class="waves-effect waves-light btn"><i class="material-icons right">cancel</i>DELETE</a>
+	       		<a ng-if="deleteForm" style="margin-top: 20px; float: right; background-color: red;" ng-click="deletePark()" class="waves-effect waves-light btn"><i class="material-icons right">check</i>confirm ?</a>
+			</div>
+       		
 		</div>
 		
 	

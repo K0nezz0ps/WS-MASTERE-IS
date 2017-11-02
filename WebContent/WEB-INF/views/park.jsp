@@ -18,6 +18,8 @@
 				
 				<!-- ForEach room in the currentPark -->
 				<div class="col s1" ng-repeat="room in parkObject.rooms">{{room.name}}</div>
+				
+				<div class="col s1"><input ng-click="selectPark(parkObject.park.id)" type="checkbox" id="test5" /></div>
 		
 			</div>
 		

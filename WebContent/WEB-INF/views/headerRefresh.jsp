@@ -27,6 +27,7 @@
 	    <link href="/WS-MASTERE-IS/assets/styles/c.css" rel="stylesheet">
 		<!-- Title -->
 		<title>IngéSup - Dashboard</title>
+		<link rel="icon" type="image/png" href="/WS-MASTERE-IS/assets/images/favicon.png" />
 		
 		<script>
 		

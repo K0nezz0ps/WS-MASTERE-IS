@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingesup.dto.MachineSwitchDto;
 import com.ingesup.hibernate.EntityManager;
 import com.ingesup.manager.MachineManager;
 import com.ingesup.model.Machine;
@@ -52,7 +53,7 @@ public class MachineRestController {
 	 * @return
 	 */
 	@RequestMapping(value="/rest/Machine/switch", method = RequestMethod.POST)
-	public ResponseEntity<?> switchMachine(@RequestBody String input){
+	public ResponseEntity<?> switchMachine(@RequestBody MachineSwitchDto.PostInput input){
 		
 		
 		return new ResponseEntity<>(HttpStatus.OK);

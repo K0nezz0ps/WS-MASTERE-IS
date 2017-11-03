@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,21 +16,7 @@ import com.ingesup.model.Machine;
 
 @RestController
 public class MachineRestController {
-	
-//	/**
-//	 * GET Method to return the whole list of machine attached to the given park id
-//	 * @param name
-//	 * @return
-//	 */
-//	@RequestMapping(value="/rest/Machine", method = RequestMethod.GET)
-//	public ResponseEntity<?> machineGet(@RequestParam("name") String name){
-//		
-//		System.out.println("MACHINE GET");
-//		System.out.println(name);
-//		
-//		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
-//	}
-//	
+
 	/**
 	 * POST Method to switch a machine of park
 	 * @param name
@@ -37,9 +24,7 @@ public class MachineRestController {
 	 */
 	@RequestMapping(value="/rest/Machine", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> machinePost(@RequestParam("targetRoomId") Integer targetRoomId,@RequestParam("machineId") String machineId){
-		
-		//TODO: moove room for machine
-		System.out.println("MACHINE POST");
+
 		Machine m = MachineManager.getById(machineId);
 		m.setId_room(targetRoomId);
 		EntityManager.update(m);
@@ -59,6 +44,18 @@ public class MachineRestController {
 		Machine m = MachineManager.getById(machineId);
 		EntityManager.delete(m);
 		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+	}
+	
+	/**
+	 * Switch from room the given list of machine & room ids
+	 * @param input
+	 * @return
+	 */
+	@RequestMapping(value="/rest/Machine/switch", method = RequestMethod.POST)
+	public ResponseEntity<?> switchMachine(@RequestBody String input){
+		
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

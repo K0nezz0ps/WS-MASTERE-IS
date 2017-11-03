@@ -18,7 +18,12 @@
 				
 				<!-- ForEach room in the currentPark -->
 				<div class="col s1" ng-click="openParkView(parkObject.park.id)" ng-repeat="room in parkObject.rooms">{{room.name}}</div>
-		
+				
+				<!-- Display alert in case of >= ComponentState.RAISED -->
+				<div style="margin-left: 30px;" class="col s2">
+					<i ng-repeat="alert in parkObject.lastAlerts" style="color: red;" class="material-icons">error</i>
+				</div>
+				
 				<div style="float: right;"><i style="cursor: pointer;" ng-click="selectPark(parkObject)" class="material-icons">delete</i></div>
 			
 			</div>

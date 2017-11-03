@@ -59,7 +59,7 @@ public class ParkControllerSpring {
 		
 		// 3. Import the most recent event for each machine
 		List<History> recentList = new ArrayList<>();
-//		recentList = HistoryManager.getRecentList();
+		recentList = HistoryManager.getRecentList();
 		
 		// 4. ForEach park, getting the rooms objects attached
 		for(Park currentPark : parkList){

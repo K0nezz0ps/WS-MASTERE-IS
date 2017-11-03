@@ -15,7 +15,8 @@
 						href="/WS-MASTERE-IS/park/{{currentPark.id}}/{{room.id}}">Room
 							name : {{room.name}} </a></span>
 					<div class="simpleDemo">
-						<ul dnd-list="room.machineList">
+						<ul dnd-list="room.machineList" dnd-inserted="logListEvent('inserted at', {{room.id}}, external, item.id)">
+						
 							<li ng-repeat="item in room.machineList" dnd-draggable="item"
 								dnd-moved="room.machineList.splice($index, 1)"
 								dnd-effect-allowed="move" dnd-selected="models.selected = item"
@@ -33,5 +34,5 @@
 			</div>
 		</div>
 	</div>
-
+	<a ng-click="editPark()" class="waves-effect waves-light btn ng-binding"><i class="material-icons right ng-binding">control_point</i>Modifier</a>
 	<jsp:include page="footer.jsp" />

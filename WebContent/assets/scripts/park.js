@@ -89,7 +89,32 @@ parkApp.controller('parkProfileController', function($scope, $rootScope, $http) 
 	
 	$scope.currentPark 	= currentPark;
 	$scope.roomList 	= roomList;
+	var editp    		= "[";	
 	
+    $scope.$watch('roomList', function(model) {
+        $scope.modelAsJson = angular.toJson(model, true);
+    }, true);
+
+    
+    //send data to server
+    $scope.logListEvent = function(action, index, external, type) {
+        var message = external ? 'External ' : '';
+        message += type + ' element was ' + action + ' position ' + index;
+        console.log(message);
+        editp+='{"idMachine":"'+type+'","idRoom":"'+index+'"},';
+        console.log(editp);
+    };
+    
+	$scope.editPark = function(){
+		editp=editp.substring(0,editp.length-1)+']';
+		
+		console.log(editp);
+		$http.post("/WS-MASTERE-IS/rest/editPark",JSON.parse(editp))
+		.then(function(response){
+			console.log(response);	
+		});
+	}
+    
 });
 
 /**

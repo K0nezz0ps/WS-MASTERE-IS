@@ -32,7 +32,7 @@ public class MachineManager {
 
 	}
 	
-	public static Machine getById(String id){
+	public static Machine getById(Integer id){
 		
 		try {
 			

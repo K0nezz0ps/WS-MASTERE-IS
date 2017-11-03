@@ -27,7 +27,7 @@ public class MachineRestController {
 	public ResponseEntity<?> machinePost(@RequestParam("targetRoomId") Integer targetRoomId,@RequestParam("machineId") String machineId){
 
 		// 1. Getting the requested machine
-		Machine m = MachineManager.getById(machineId);
+		Machine m = MachineManager.getById(Integer.parseInt(machineId));
 		
 		// 2. Updating roomId
 		m.setId_room(targetRoomId);
@@ -45,7 +45,7 @@ public class MachineRestController {
 	public ResponseEntity<?> machineDelete(@RequestParam("machineId") String machineId){
 		
 		// 1. Getting the requested machine
-		Machine m = MachineManager.getById(machineId);
+		Machine m = MachineManager.getById(Integer.parseInt(machineId));
 		
 		// 2. Deleting it
 		EntityManager.delete(m);

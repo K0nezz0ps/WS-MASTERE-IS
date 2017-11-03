@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingesup.controller.ParkControllerSpring;
+import com.ingesup.controller.UpdateController;
 import com.ingesup.controller.utils.ControllerUtils;
+import com.ingesup.dto.MachineSwitchDto;
+import com.ingesup.dto.MachineSwitchDto.PostInput.SwitchInfo;
 import com.ingesup.dto.ParkListDto;
 import com.ingesup.hibernate.EntityManager;
+import com.ingesup.manager.MachineManager;
 import com.ingesup.manager.ParkManager;
+import com.ingesup.model.Machine;
 import com.ingesup.model.Park;
 import com.ingesup.model.Room;
+
+import antlr.collections.List;
 
 @RestController
 public class ParkRestController {
@@ -49,23 +57,17 @@ public class ParkRestController {
 	}
 	
 	@RequestMapping(value="/rest/editPark", method= RequestMethod.POST)
-	public void editPark(@RequestBody  String values){
-		System.out.println(values);
-//		// 1. Trying to get a potential park with the same given parkName
-//		Park testPark = ParkManager.get(parkName);
-//		
-//		// 2. If this name is already used, return error
-//		if(testPark != null)
-//			return new ResponseEntity<>("This name is already used.", HttpStatus.INTERNAL_SERVER_ERROR);
-//		
-//		// 3. Else, create the park
-//		Park newPark = new Park();
-//		newPark.setName(parkName);
-//		ParkManager.create(newPark);
-//		
-//		newPark = ParkManager.get(parkName);
-
+	public ResponseEntity<?> editPark(@RequestBody MachineSwitchDto.PostInput input){
 		
+		java.util.List<Machine> machienlist=new ArrayList<>();
+		for (SwitchInfo change : input.getSwitchInfoList()) {
+			Machine m= MachineManager.getById(change.getMachineId());
+			m.setId_room(change.getTargetRoomId());
+			machienlist.add(m);
+		}
+		EntityManager.update(machienlist);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	/**

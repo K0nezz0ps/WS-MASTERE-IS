@@ -20,7 +20,15 @@ public class ParkListDto {
 		
 		private Park park;
 		private List<Room> rooms;
+		private List<Alert> lastAlerts;
 		
+		@Data
+		@AllArgsConstructor
+		public static class Alert {
+			private String machineIp;
+			private Room room;
+			private Park park;
+		}
 	}
 	
 }

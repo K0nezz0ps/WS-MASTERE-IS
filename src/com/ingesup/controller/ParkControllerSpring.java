@@ -18,11 +18,14 @@ import com.google.gson.Gson;
 import com.ingesup.controller.utils.ControllerUtils;
 import com.ingesup.dto.HistoryUpdateDto;
 import com.ingesup.dto.ParkListDto;
+import com.ingesup.dto.ParkListDto.GetOutput.Alert;
 import com.ingesup.dto.RoomDto;
+import com.ingesup.manager.HistoryManager;
 import com.ingesup.manager.MachineManager;
 import com.ingesup.manager.ParkManager;
 import com.ingesup.manager.RoomManager;
 import com.ingesup.manager.UserManager;
+import com.ingesup.model.History;
 import com.ingesup.model.Machine;
 import com.ingesup.model.Park;
 import com.ingesup.model.Room;
@@ -54,12 +57,45 @@ public class ParkControllerSpring {
 		
 		List<ParkListDto.GetOutput> outputParkList = new ArrayList<>();
 		
-		// 3. ForEach park, getting the rooms objects attached
-		for(Park currentPark : parkList)
-			outputParkList.add(new ParkListDto.GetOutput(currentPark, RoomManager.getAllRoom(currentPark.getId())));
+		// 3. Import the most recent event for each machine
+		List<History> recentList = new ArrayList<>();
+//		recentList = HistoryManager.getRecentList();
 		
-		// 4. Adding the park List to the attribute
+		// 4. ForEach park, getting the rooms objects attached
+		for(Park currentPark : parkList){
+
+			List<Room> currentRoomList = RoomManager.getAllRoom(currentPark.getId());
+			List<Alert> currentParkRecentAlert = new ArrayList<>();
+		
+			// 4.1 Loading all the machine attached to the current park
+			List<Machine> currentMachineList = MachineManager.getAll(currentPark.getId());
+			
+			// 4.2 Creating an Alert object for each machine History where any ComponentState > Average
+			recentList.stream().forEach(x -> { 
+				
+				for(Machine currentMachine : currentMachineList){
+					if(x.getId_machine() == currentMachine.getId()){
+						
+						ComponentState cpuState = ComponentState.forValue(x.getCpuState());
+						ComponentState ramState = ComponentState.forValue(x.getRamState());
+						
+						// 4.2.1 In case of higher ComponentState than RAISED, create an alert
+						if(cpuState.equals(ComponentState.RAISED) || cpuState.equals(ComponentState.HEAVEN) || cpuState.equals(ComponentState.ALERT) || ramState.equals(ComponentState.RAISED) || ramState.equals(ComponentState.HEAVEN) || ramState.equals(ComponentState.ALERT))
+							currentParkRecentAlert.add(new Alert(currentMachine.getMachineIp(), currentRoomList.stream().filter(y -> y.getId() == currentMachine.getId_room()).findFirst().orElse(null) , currentPark));
+						
+					}
+				}
+				
+			});
+			
+			outputParkList.add(new ParkListDto.GetOutput(currentPark, currentRoomList, currentParkRecentAlert));
+		}
+			
+
+		// 5. Adding the park List to the attribute
 		model.addAttribute("parkList", new Gson().toJson(outputParkList));
+		
+		// 6. Null values here (to match with the JSP), because they are not required but potentially used by the JS
         model.addAttribute("room", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("roomList", new Gson().toJson(new ArrayList<>()));
@@ -114,6 +150,8 @@ public class ParkControllerSpring {
 		// 7. Adding model attributes
 		model.addAttribute("currentPark", new Gson().toJson(currentPark));
 		model.addAttribute("roomList", new Gson().toJson(outputList));
+		
+		// 8. Null values here (to match with the JSP), because they are not required but potentially used by the JS
 		model.addAttribute("parkList", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("room", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
@@ -171,6 +209,8 @@ public class ParkControllerSpring {
 		model.addAttribute("room", new Gson().toJson(new RoomDto.GetOutput(currentRoom.getId(), currentRoom.getName(), currentRoom.getId_park(), machineList)));
 		model.addAttribute("historyList", new Gson().toJson(recentHistoryList));
 		model.addAttribute("roomList", new Gson().toJson(roomList));
+		
+		// 7. Null values here (to match with the JSP), because they are not required but potentially used by the JS
 		model.addAttribute("currentPark", new Gson().toJson(new ArrayList<>()));
 		model.addAttribute("parkList", new Gson().toJson(new ArrayList<>()));
 		

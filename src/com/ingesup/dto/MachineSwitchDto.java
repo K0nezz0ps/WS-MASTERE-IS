@@ -16,6 +16,8 @@ public class MachineSwitchDto {
 	public static class PostInput {
 		private List<SwitchInfo> switchInfoList;
 		
+		@Data
+		@AllArgsConstructor
 		public static class SwitchInfo {
 			private Integer machineId;
 			private Integer targetRoomId;

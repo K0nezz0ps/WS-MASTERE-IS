@@ -23,7 +23,6 @@
 	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	    <!-- Script drag & drop  -->
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-drag-and-drop-lists/1.4.0/angular-drag-and-drop-lists.min.js"></script>
-	    <script src="/WS-MASTERE-IS/assets/scripts/drag_drop.js"></script>
 	    <link href="/WS-MASTERE-IS/assets/styles/c.css" rel="stylesheet">
 		<!-- Title -->
 		<title>IngéSup - Dashboard</title>

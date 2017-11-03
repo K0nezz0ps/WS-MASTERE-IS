@@ -39,5 +39,12 @@
 			</div>
 			
 		</div>
+		<div style="width: 60%; float: left;">
+			<input id="machine_name" ng-model="input.machineName" type="text" class="validate" style="width: 200px; margin-right: 10px;">
+			<label for="machine_name">Machine IP</label>
+			<a ng-click="createMachine()" class="waves-effect waves-light btn">Create</a>
+			<p ng-if="showCreateError" style="color: red; font-size: 12px;">{{errorCreateMessage}}</p>
+			<p ng-if="showCreateValidation" style="color: green; font-size: 12px;">{{validationCreateMessage}}</p>
+		</div>
 		
 <jsp:include page="footer.jsp"/>

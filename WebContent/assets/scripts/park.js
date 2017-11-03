@@ -120,7 +120,34 @@ parkApp.controller('parkProfileController', function($scope, $rootScope, $http) 
 	
 	$scope.currentPark 	= currentPark;
 	$scope.roomList 	= roomList;
+	$scope.dataSwitchList = {};
 	
+    $scope.$watch('roomList', function(model) {
+        $scope.modelAsJson = angular.toJson(model, true);
+    }, true);
+
+    $scope.arrayDataSwitch = [];
+    //send data to server
+    $scope.logListEvent = function(action, index, external, type) {
+        var message = external ? 'External ' : '';
+        message += type + ' element was ' + action + ' position ' + index;
+        console.log(message);
+        $scope.arrayDataSwitch.push({machineId:type, targetRoomId: index});
+//        editp+='{"machineId":"'+type+'","targetRoomId":"'+index+'"},';
+    };
+    
+	$scope.editPark = function(){
+//		editp=editp.substring(0,editp.length-1)+'}';
+		
+		$scope.dataSwitchList.switchInfoList = $scope.arrayDataSwitch;
+		$http.post("/WS-MASTERE-IS/rest/editPark",$scope.dataSwitchList)
+		.then(function(response){
+			console.log(response);
+			
+			window.location.href = "/WS-MASTERE-IS/park/" + $scope.currentPark.id;
+		});
+	}
+    
 });
 
 /**
@@ -133,6 +160,21 @@ parkApp.controller('roomProfileController', function($scope, $rootScope, $http) 
 	$scope.historyList = historyList;
 	$scope.roomList    = roomList;
 	
+	$scope.createMachine = function(){
+		
+		$scope.showCreateError = false;
+		$scope.showCreateValidation = false;
+		
+		// Check if the name is invalid (empty, here)
+		if($scope.input.machineName.trim() == ""){
+			$scope.errorCreateMessage = "Invalid name";
+			$scope.showCreateError = true;
+			return;
+		}
+		else{
+			
+		}
+	}
 	
 	$scope.deleteMachine = function(machine){
 		

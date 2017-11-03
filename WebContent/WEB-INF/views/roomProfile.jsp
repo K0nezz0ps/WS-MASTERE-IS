@@ -11,11 +11,13 @@
 	
 		<div class="container park-container" style="margin-top: 20px; margin-bottom: 20px;">
 		
-			<div ng-repeat="machine in historyList" style="border: 1px solid grey; margin: 4px; width: 250px; float: left;">
+			<div ng-repeat="machine in historyList" style="border: 1px solid grey; margin: 4px; width: 250px; height: 200px; float: left;">
 			
-				<p style="font-weight: bold;">{{machine.machineIp}}</p>
+				<p style="font-weight: bold; margin-left: 5px;">{{machine.machineIp}}</p>
+				<img ng-if="!isLaterThanFiveMinutes(machine.dateEvent)" style="float: right; top: 0;" src="/WS-MASTERE-IS/assets/images/ordi.png" alt="Machine {{machine.machineIp}}" height="64" width="64"/> 
+				<img ng-if="isLaterThanFiveMinutes(machine.dateEvent)" style="float: right; top: 0;" src="/WS-MASTERE-IS/assets/images/ordi_off.png" alt="Machine {{machine.machineIp}}" height="64" width="64"/> 
 				
-				<ul>
+				<ul style="margin-left: 5px;">
 					<li>CPU : {{machine.cpu}} - : 
 					
 						<span ng-class="getStateColorClass(machine.cpuPercentage)">{{machine.cpuPercentage}}</span>
@@ -30,7 +32,9 @@
 				</ul>
 				
 				<!-- Button for the delete request -->
-				<button ng-click="deleteMachine(machine)">Delete from room</button>
+				<div style="text-align:center;"> 
+					<a style="background-color: rgb(255, 99, 99); margin-left: auto; margin-right: auto;" ng-click="deleteMachine(machine)" class="waves-effect waves-light btn"><i class="material-icons right">cancel</i>confirm ?</a>
+				</div>
 			
 			</div>
 			

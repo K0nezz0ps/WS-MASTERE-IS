@@ -26,9 +26,13 @@ public class MachineRestController {
 	@RequestMapping(value="/rest/Machine", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> machinePost(@RequestParam("targetRoomId") Integer targetRoomId,@RequestParam("machineId") String machineId){
 
+		// 1. Getting the requested machine
 		Machine m = MachineManager.getById(machineId);
+		
+		// 2. Updating roomId
 		m.setId_room(targetRoomId);
 		EntityManager.update(m);
+		
 		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
 	}
 	
@@ -40,10 +44,12 @@ public class MachineRestController {
 	@RequestMapping(value="/rest/Machine", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> machineDelete(@RequestParam("machineId") String machineId){
 		
-		//TODO: moove room for machine
-		System.out.println("MACHINE POST");
+		// 1. Getting the requested machine
 		Machine m = MachineManager.getById(machineId);
+		
+		// 2. Deleting it
 		EntityManager.delete(m);
+		
 		return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
 	}
 	
@@ -54,6 +60,7 @@ public class MachineRestController {
 	 */
 	@RequestMapping(value="/rest/Machine/switch", method = RequestMethod.POST)
 	public ResponseEntity<?> switchMachine(@RequestBody MachineSwitchDto.PostInput input){
+		
 		
 		
 		return new ResponseEntity<>(HttpStatus.OK);

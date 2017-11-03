@@ -1,10 +1,7 @@
 package com.ingesup.hibernate;
 
 import java.util.List;
-
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public abstract class EntityManager {
 	

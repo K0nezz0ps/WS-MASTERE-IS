@@ -1,5 +1,9 @@
 package com.ingesup.restcontroller;
 
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ingesup.controller.utils.ControllerUtils;
+import com.ingesup.dto.ParkListDto;
 import com.ingesup.hibernate.EntityManager;
 import com.ingesup.manager.ParkManager;
 import com.ingesup.model.Park;
+import com.ingesup.model.Room;
 
 @RestController
 public class ParkRestController {
@@ -35,9 +42,9 @@ public class ParkRestController {
 		newPark.setName(parkName);
 		ParkManager.create(newPark);
 		
-		newPark = ParkManager.get(parkName);
+		ParkListDto.GetOutput output = new ParkListDto.GetOutput(ParkManager.get(parkName), new ArrayList<Room>());
 		
-		return new ResponseEntity<>(newPark ,HttpStatus.CREATED);
+		return new ResponseEntity<>(output ,HttpStatus.CREATED);
 		
 	}
 	
@@ -61,4 +68,27 @@ public class ParkRestController {
 		
 	}
 
+	/**
+	 * DELETE Function to delete a Park
+	 * @param parkId
+	 * @return
+	 */
+	@RequestMapping(value="/rest/ParkDelete", method=RequestMethod.POST)
+	public ResponseEntity<?> deletePark(@RequestParam("parkId") Integer parkId, HttpServletRequest request){
+		
+		// 1. Validating user
+		if(!ControllerUtils.validateUser(request))
+			return new ResponseEntity<>("You does'nt have access to this action.",HttpStatus.UNAUTHORIZED);
+		
+		// 2. Getting request park by Id
+		Park currentPark = ParkManager.getPark(parkId);
+		if(currentPark == null)
+			return new ResponseEntity<>("This park does'nt exist",HttpStatus.NOT_FOUND);
+		
+		// 3. Deleting the park
+		EntityManager.delete(currentPark);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		
+	}
 }

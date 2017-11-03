@@ -10,10 +10,12 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 	$scope.createParkButton   = "Create Park"; 	// Display name of the button
 	$scope.createParkIcon     = "control_point";// Display icon in the button
 	$scope.parkForm           = false; 	  		// Boolean to display the creation park form
-	$scope.inputParkName      = "nameOfPark";				// Wanted input name for the created park
+	$scope.input              = {parkName: ""};				// Wanted input name for the created park
 	$scope.errorCreateMessage = "";				// Displayed message in case of error
 	$scope.validationCreateMessage = "";		// Displayed validation message
 	$scope.deleteForm		  = false;
+	$scope.selectedPark     = null;
+	$scope.validationDeleteMessage = false;
 	
 	// Switch the view to the clicked park
 	$scope.openParkView = function(parkId){
@@ -36,15 +38,14 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 			
 	}
 	
+	// POST Request to create a park, display error in case of bad input or wrong request
 	$scope.createPark = function(){
-		
-		console.log($scope.inputParkName);
 		
 		$scope.showCreateError = false;
 		$scope.showCreateValidation = false;
 		
 		// Check if the name is invalid (empty, here)
-		if($scope.inputParkName.trim() == ""){
+		if($scope.input.parkName.trim() == ""){
 			$scope.errorCreateMessage = "Invalid name";
 			$scope.showCreateError = true;
 			return;
@@ -52,7 +53,7 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 		else{
 			
 			// Request to create the new park
-			$http.post("/WS-MASTERE-IS/rest/createPark?parkName=" + $scope.inputParkName)
+			$http.post("/WS-MASTERE-IS/rest/createPark?parkName=" + $scope.input.parkName)
 				.then(function(response){
 					console.log(response);
 					
@@ -60,7 +61,8 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 						$scope.validationCreateMessage = "Created !";
 						$scope.showCreateValidation = true;
 						
-						//TODO: add the new park in the $scope.loadedParkList
+						// Adding the new Park to the ParkObjectList
+						$scope.loadedParkList.push(response.data);
 					}
 					else{
 						$scope.errorCreateMessage = response.data;
@@ -68,15 +70,44 @@ parkApp.controller('parkMainController', function($scope, $rootScope, $http) {
 					}
 						
 				});
-			
-			
-			
-
 		}
 	}
 	
-	$scope.showDeletePark = function(){
-		$scope.deleteForm = !$scope.deleteForm;
+	// Select a park while clicking in a check box
+	$scope.selectPark = function(parkObject){
+
+		$scope.selectedPark = parkObject;
+		$scope.deleteForm = true;
+		
+	}
+	
+	// Request to delete the selected park
+	$scope.deletePark = function() {
+		
+		$http.post("/WS-MASTERE-IS/rest/ParkDelete?parkId=" + $scope.selectedPark.park.id)
+			.then(function(response){
+				
+				if(response.status > 204){
+					$scope.errorDeleteMessage = true;
+					$scope.errorDeletionMessage = response.data;
+				}
+				else{
+					$scope.validationDeleteMessage = true;
+					
+					var indexOfCurrentPark = $scope.loadedParkList.indexOf($scope.selectedPark);
+					$scope.loadedParkList.splice(indexOfCurrentPark, 1);
+					
+					$scope.cancelDeletion();
+				}
+				
+			});
+		
+	}
+	
+	// Cancel the deletion display
+	$scope.cancelDeletion = function() {
+		$scope.deleteForm = false;
+		$scope.validationDeleteMessage = false;
 	}
 
 });
@@ -127,21 +158,19 @@ parkApp.controller('roomProfileController', function($scope, $rootScope, $http) 
 	$scope.historyList = historyList;
 	$scope.roomList    = roomList;
 	
-	$scope.selectedNewRoom = null;
 	
 	$scope.deleteMachine = function(machine){
-
-		// 
 		
 	}
 	
-	$scope.switchMachineRoom = function(machine) {
+	$scope.isLaterThanFiveMinutes = function(dateEvent){
 		
-		// If no selectedValue for the new room id
-		if($scope.selectedNewRoom)
-			return;
+		var currentDate = new Date();
 		
-		//TODO: http post request /rest/Machine to switch room
+		if(new Date(currentDate) - new Date(dateEvent) >= 300000)
+			return true;
+		
+		return false;
 		
 	}
 	

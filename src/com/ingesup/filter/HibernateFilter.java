@@ -23,7 +23,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import com.ingesup.hibernate.HibernateUtilAuth;
 import com.ingesup.hibernate.HibernateUtilMastere;
 
-@WebFilter(servletNames="MonitorController")
+@WebFilter(servletNames="ParkControllerSpring")
 public class HibernateFilter implements Filter {
 
 	@Override
@@ -38,11 +38,9 @@ public class HibernateFilter implements Filter {
 		HttpServletRequest request   = (HttpServletRequest) arg0;
 		// 1. Getting the Session value that define if a session is alive
 		if(!isActiveSession(request)){
-			((HttpServletResponse) arg1).sendRedirect("/WS-CNS-AUTH/auth/login");
+			((HttpServletResponse) arg1).sendRedirect("/WS-CNS-AUTH/login");
 			return;
 		}
-		
-		this.cleanHibernateExchange();
 		
 		// 3. Use the next filter in the FilterChain
 		arg2.doFilter(arg0, arg1);

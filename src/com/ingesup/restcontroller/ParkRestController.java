@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ingesup.controller.utils.ControllerUtils;
 import com.ingesup.dto.ParkListDto;
+import com.ingesup.dto.ParkListDto.GetOutput.Alert;
 import com.ingesup.hibernate.EntityManager;
 import com.ingesup.manager.ParkManager;
 import com.ingesup.model.Park;
@@ -41,7 +42,7 @@ public class ParkRestController {
 		newPark.setName(parkName);
 		ParkManager.create(newPark);
 		
-		ParkListDto.GetOutput output = new ParkListDto.GetOutput(ParkManager.get(parkName), new ArrayList<Room>());
+		ParkListDto.GetOutput output = new ParkListDto.GetOutput(ParkManager.get(parkName), new ArrayList<Room>(), new ArrayList<Alert>());
 		
 		return new ResponseEntity<>(output ,HttpStatus.CREATED);
 		

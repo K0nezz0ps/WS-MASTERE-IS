@@ -44,7 +44,7 @@
 			<div style="width: 35%; float: right; text-align: center;">
 	       		<a ng-if="deleteForm" style="background-color: red;" ng-click="deletePark()" class="waves-effect waves-light btn"><i class="material-icons right">check</i>confirm ?</a>
 	       		<i ng-if="deleteForm" style="margin-top: 5px;float:right; cursor: pointer;" ng-click="cancelDeletion()" class="material-icons">cancel</i>
-	       		<p ng-if="deleteForm"> Delete the PARK {{selectedParkId}}</p>
+	       		<p ng-if="deleteForm"> Delete the PARK {{selectedPark.park.id}}</p>
 	       		<p ng-if="validationDeleteMessage" style="color: green;">Successfully deleted !</p>
 	       		<p ng-if="errorDeleteMessage" style="color: red;">{{errorDeletionMessage}}</p>
 			</div>

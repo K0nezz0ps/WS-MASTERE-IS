@@ -32,7 +32,7 @@ public class HistoryManager {
 		
 		try {
 			
-			Query query = HibernateUtilMastere.getSession().createQuery("select h.* from Machine m join History h on h.id_machine=m.id and h.dateEvent=(select max(h1.dateEvent) from History h1 where h1.id_machine=h.id_machine)");
+			Query query = HibernateUtilMastere.getSession().createQuery("FROM History h WHERE h.dateEvent = ( SELECT MAX( h1.dateEvent ) FROM History h1 WHERE h1.id_machine = h.id_machine)");
 			
 			List<History> list = (List<History>) query.list();
 			

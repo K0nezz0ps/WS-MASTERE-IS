@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 
 import com.ingesup.model.Room;
 
+@SuppressWarnings({"deprecation","unchecked","rawtypes"})
 public class RoomManager {
 	
 	/**

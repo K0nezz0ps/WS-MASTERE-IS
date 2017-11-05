@@ -36,7 +36,6 @@ public abstract class ControllerUtils {
 		// 2. Trying to find the "isConnected" cookie
 		Cookie sessionCookie  = null;
 		Cookie emailCookie    = null;
-		Cookie passwordCookie = null;
 		
 		if(cookieList != null)
 			// ForEach cookie, trying to get the interested ones 
@@ -46,8 +45,6 @@ public abstract class ControllerUtils {
 										break;
 					case "userEmail"  : emailCookie   = currentCookie;
 										break;
-					case "userPassword" : passwordCookie = currentCookie;
-										break;
 					default: break;
 				}
 			}
@@ -56,8 +53,7 @@ public abstract class ControllerUtils {
 		if( sessionCookie == null 
 				|| !sessionCookie.getValue().equals("true") 
 				|| emailCookie == null 
-				|| passwordCookie == null 
-				|| UserManager.getUser(emailCookie.getValue(), passwordCookie.getValue()) == null)
+				|| UserManager.getUser(emailCookie.getValue()) == null)
 			return false;
 		
 		return true;
@@ -73,7 +69,7 @@ public abstract class ControllerUtils {
 		Cookie emailCookie = null;
 		if(cookies != null) {
 			for(Cookie cookie : cookies) {
-				if(cookie.getName().equals("email")) {
+				if(cookie.getName().equals("userEmail")) {
 					emailCookie = cookie;
 					break;
 				}

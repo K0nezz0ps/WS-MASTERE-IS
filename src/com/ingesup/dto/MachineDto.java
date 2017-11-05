@@ -19,9 +19,5 @@ public class MachineDto {
 		private Integer id;
 		private String name;
 	}
-	
-	public static class DeleteInput {
-		private Integer id;
-	}
 
 }

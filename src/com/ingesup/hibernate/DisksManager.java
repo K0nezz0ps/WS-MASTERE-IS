@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 
 import com.ingesup.model.Disks;
 
+@SuppressWarnings({"deprecation","unchecked","rawtypes"})
 public class DisksManager {
 	/**
 	 * Create a new History line in database

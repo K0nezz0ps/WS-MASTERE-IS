@@ -1,15 +1,11 @@
 package com.ingesup.hibernate;
 
 import java.util.List;
-
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
+import org.hibernate.query.Query;
 import com.ingesup.model.Park;
-import com.ingesup.model.User;
 
+@SuppressWarnings({"deprecation","unchecked","rawtypes"})
 public class ParkManager {
 
 	public static Park get(String parkName){

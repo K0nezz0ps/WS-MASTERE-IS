@@ -2,9 +2,9 @@ package com.ingesup.hibernate;
 
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
-import com.ingesup.hibernate.HibernateUtilAuth;
 import com.ingesup.model.User;
 
+@SuppressWarnings({"deprecation","rawtypes"})
 public class UserManager {
 	
 	/**
@@ -14,7 +14,7 @@ public class UserManager {
 	public static User getUser(String mail){
 		
 		try {
-			Query query = HibernateUtilAuth.getSession().createQuery("from User where mail=:uMail");
+			Query query = HibernateUtilMastere.getSession().createQuery("from User where mail=:uMail");
 			query.setParameter("uMail", mail);
 			
 			User idUser = (User) query.uniqueResult();
@@ -30,7 +30,7 @@ public class UserManager {
 	public static User getUser(String mail, String password){
 		
 		try{
-			Query query = HibernateUtilAuth.getSession().createQuery("from User where mail=:mail and password=:password");
+			Query query = HibernateUtilMastere.getSession().createQuery("from User where mail=:mail and password=:password");
 			query.setParameter("mail", mail);
 			query.setParameter("password", password);
 			

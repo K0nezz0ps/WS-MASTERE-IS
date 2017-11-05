@@ -5,7 +5,6 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   
-  
    <properties>
         <springframework.version>4.3.0.RELEASE</springframework.version>
         <org.springframework.security-version>4.0.0.RELEASE</org.springframework.security-version>
@@ -99,20 +98,6 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.1.2</version>
 		</dependency>
-
-		  <!-- WS-CNS-AUTH -->
-		  <dependency>
-		 	 <groupId>com.ingesup</groupId>
-		  	 <artifactId>WS-CNS-AUTH</artifactId>
-		  	 <version>0.0.1-SNAPSHOT</version>
-		  </dependency>
-		  
-		  <dependency>
-		  	 <groupId>com.ingesup</groupId>
-		  	 <artifactId>FW-COM</artifactId>
-		  	 <version>0.0.1-SNAPSHOT</version>
-		  	 <scope>compile</scope>
-		  </dependency>
   
   </dependencies>
   

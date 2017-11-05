@@ -1,55 +1,56 @@
 package com.ingesup.filter;
 
 import java.io.IOException;
-import java.util.Arrays;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
-import com.ingesup.hibernate.HibernateUtilAuth;
 import com.ingesup.hibernate.HibernateUtilMastere;
+import com.ingesup.hibernate.UserManager;
 
-@WebFilter(servletNames="ParkControllerSpring")
-public class HibernateFilter implements Filter {
+public class AuthenticationFilter implements Filter {
 
+	/**
+	 * Empty override function
+	 */
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Authentication Filter that check if the current connected user is authorized to continue
+	 * If not connected, then the user is redirected to the AUTH Login Page
+	 */
 	@Override
 	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2) throws IOException, ServletException {
 
 		HttpServletRequest request   = (HttpServletRequest) arg0;
-		// 1. Getting the Session value that define if a session is alive
-		if(!isActiveSession(request)){
+		
+		// 1. Checking if the current connected user can continue here
+		if(!isValidSession(request)){
+			// 1.1 Redirect to login if necessary 
 			((HttpServletResponse) arg1).sendRedirect("/WS-CNS-AUTH/login");
 			return;
 		}
 		
-		// 3. Use the next filter in the FilterChain
+		// 2. Use the next filter in the FilterChain
 		arg2.doFilter(arg0, arg1);
 		
-		// 4. Commit & Close Transac+Session
+		// 3. Commit & Close Transac+Session
 		this.cleanHibernateExchange();
 		
 	}
 
+	/**
+	 * Empty override function
+	 */
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
 		// TODO Auto-generated method stub
@@ -74,49 +75,44 @@ public class HibernateFilter implements Filter {
 	}
 	
 	/**
-	 * Return the boolean accorded to the active session status
+	 * Check if the current session is authorized to continue
+	 * Return the accorded boolean
 	 * @param request
 	 * @return
 	 */
-	public static boolean isActiveSession(HttpServletRequest request) {
+	public static boolean isValidSession(HttpServletRequest request) {
 		
 		// 1. Getting cookies
 		Cookie[] cookieList = request.getCookies();
 		
 		// 2. Trying to find the "isConnected" cookie
-		Cookie requestCookie = null;
+		Cookie sessionCookie  = null;
+		Cookie emailCookie    = null;
+		Cookie passwordCookie = null;
+		
 		if(cookieList != null)
-			for(Cookie currentCookie : cookieList){
-				if(currentCookie.getName().equals("isConnected")){
-					requestCookie = currentCookie;
-					break;
+			// ForEach cookie, trying to get the interested ones 
+			for(Cookie currentCookie : cookieList){		
+				switch(currentCookie.getName()){
+					case "isConnected": sessionCookie = currentCookie;
+										break;
+					case "userEmail"  : emailCookie   = currentCookie;
+										break;
+					case "userPassword" : passwordCookie = currentCookie;
+										break;
+					default: break;
 				}
 			}
 		
-		// 3. Checking that the cookie value is set to true
-		if( requestCookie == null || !requestCookie.getValue().equals("true") )
+		// 3. Checking that each previous wanted cookies are not null, then, checking if the user attached to the email & password exist
+		if( sessionCookie == null 
+				|| !sessionCookie.getValue().equals("true") 
+				|| emailCookie == null 
+				|| passwordCookie == null 
+				|| UserManager.getUser(emailCookie.getValue(), passwordCookie.getValue()) == null)
 			return false;
 		
 		return true;
 	}
 
-	
-	
-	public static String getCookieEmail(HttpServletRequest req) {
-		Cookie[] cookies = req.getCookies();
-		Cookie emailCookie = null;
-		if(cookies != null) {
-			for(Cookie cookie : cookies) {
-				if(cookie.getName().equals("email")) {
-					emailCookie = cookie;
-					break;
-				}
-			}
-		}
-		
-		if(emailCookie != null)
-			return emailCookie.getValue();
-		
-		return null;
-	}
 }

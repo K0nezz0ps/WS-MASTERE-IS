@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ingesup.dto.MachineSwitchDto;
 import com.ingesup.hibernate.EntityManager;
-import com.ingesup.manager.MachineManager;
+import com.ingesup.hibernate.MachineManager;
 import com.ingesup.model.Machine;
 
 @RestController

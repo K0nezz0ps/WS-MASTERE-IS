@@ -13,9 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.ingesup.manager.DisksManager;
-import com.ingesup.manager.HistoryManager;
-import com.ingesup.manager.MachineManager;
+
+import com.ingesup.hibernate.DisksManager;
+import com.ingesup.hibernate.HistoryManager;
+import com.ingesup.hibernate.MachineManager;
 import com.ingesup.model.Disks;
 import com.ingesup.model.History;
 import com.ingesup.model.Machine;

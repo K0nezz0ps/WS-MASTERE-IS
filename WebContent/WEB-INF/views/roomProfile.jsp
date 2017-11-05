@@ -13,17 +13,18 @@
 		
 			<div ng-repeat="machine in historyList" style="border: 1px solid grey; margin: 4px; width: 250px; height: 200px; float: left;">
 			
-				<p style="font-weight: bold; margin-left: 5px;">{{machine.machineIp}}</p>
+				<p ng-if="machine.machineIp.length > 0" style="font-weight: bold; margin-left: 5px;">{{machine.machineIp}}</p>
+				<p ng-if="!machine.machineIp.length > 0" style="font-weight: bold; margin-left: 5px;">N/A.N/A</p>
 				<img ng-if="!isLaterThanFiveMinutes(machine.dateEvent)" style="float: right; top: 0;" src="/WS-MASTERE-IS/assets/images/ordi.png" alt="Machine {{machine.machineIp}}" height="64" width="64"/> 
 				<img ng-if="isLaterThanFiveMinutes(machine.dateEvent)" style="float: right; top: 0;" src="/WS-MASTERE-IS/assets/images/ordi_off.png" alt="Machine {{machine.machineIp}}" height="64" width="64"/> 
 				
 				<ul style="margin-left: 5px;">
-					<li>CPU : {{machine.cpu}} - : 
+					<li>CPU ({{machine.cpu}}Ghz) : 
 					
 						<span ng-class="getStateColorClass(machine.cpuPercentage)">{{machine.cpuPercentage}}</span>
 					
 					</li>
-					<li>RAM : {{machine.ram}} - : 
+					<li>RAM ({{machine.ram}}Go) : 
 					
 						<span ng-class="getStateColorClass(machine.ramPercentage)">{{machine.ramPercentage}}</span>
 					

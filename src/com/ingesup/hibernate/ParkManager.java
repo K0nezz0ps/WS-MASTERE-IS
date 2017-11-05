@@ -1,4 +1,4 @@
-package com.ingesup.manager;
+package com.ingesup.hibernate;
 
 import java.util.List;
 
@@ -7,7 +7,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.ingesup.hibernate.HibernateUtilMastere;
 import com.ingesup.model.Park;
 import com.ingesup.model.User;
 

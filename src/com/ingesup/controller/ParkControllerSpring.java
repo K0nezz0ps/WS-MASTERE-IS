@@ -19,12 +19,12 @@ import com.ingesup.controller.utils.ControllerUtils;
 import com.ingesup.dto.HistoryUpdateDto;
 import com.ingesup.dto.ParkListDto;
 import com.ingesup.dto.ParkListDto.GetOutput.Alert;
+import com.ingesup.hibernate.HistoryManager;
+import com.ingesup.hibernate.MachineManager;
+import com.ingesup.hibernate.ParkManager;
+import com.ingesup.hibernate.RoomManager;
+import com.ingesup.hibernate.UserManager;
 import com.ingesup.dto.RoomDto;
-import com.ingesup.manager.HistoryManager;
-import com.ingesup.manager.MachineManager;
-import com.ingesup.manager.ParkManager;
-import com.ingesup.manager.RoomManager;
-import com.ingesup.manager.UserManager;
 import com.ingesup.model.History;
 import com.ingesup.model.Machine;
 import com.ingesup.model.Park;
@@ -47,7 +47,7 @@ public class ParkControllerSpring {
 //		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		// 1. Verifying that the current user is connected
-		if(!ControllerUtils.validateUser(request)){
+		if(!ControllerUtils.isValidUser(request)){
 			ControllerUtils.redirect("/WS-CNS-AUTH/login", response);
 			return null;
 		}
@@ -185,19 +185,18 @@ public class ParkControllerSpring {
 		List<Machine> machineList = MachineManager.getAllByRoomIds(Arrays.asList(currentRoom.getId()));
 		
 		List<HistoryUpdateDto.GetOutput> recentHistoryList = new ArrayList<>();
-		recentHistoryList.add(new HistoryUpdateDto.GetOutput(null, null, null, new Date(), "192.0.0.9" , ComponentState.HEAVEN		, ComponentState.VERYGOOD	, ComponentState.HEAVEN));
-		recentHistoryList.add(new HistoryUpdateDto.GetOutput(null, null, null, new Date(), "192.0.0.10", ComponentState.ALERT		, ComponentState.RAISED		, ComponentState.ALERT));
-		recentHistoryList.add(new HistoryUpdateDto.GetOutput(null, null, null, new Date(), "192.0.0.11", ComponentState.ALERT		, ComponentState.VERYGOOD	, ComponentState.RAISED));
-		recentHistoryList.add(new HistoryUpdateDto.GetOutput(null, null, null, new Date(), "192.0.0.45", ComponentState.HEAVEN		, ComponentState.RAISED		, ComponentState.HEAVEN));
-		recentHistoryList.add(new HistoryUpdateDto.GetOutput(null, null, null, new Date(), "192.0.2.98", ComponentState.VERYGOOD	, ComponentState.HEAVEN		, ComponentState.VERYGOOD));
 		
+		for(History currentHistory : HistoryManager.getRecentList())
+			recentHistoryList.add(new HistoryUpdateDto.GetOutput(currentHistory.getId_machine(), null, null, currentHistory.getDateEvent(), null , ComponentState.forValue(currentHistory.getCpuState()), ComponentState.forValue(currentHistory.getRamState()), null));
+
 		// 4. Parsing values for the output
 		for(Machine currentMachine : machineList)
 			recentHistoryList.stream().forEach(x -> {
-				if(x.getMachineIp().equals(currentMachine.getMachineIp())){
+				if(x.getId().equals(currentMachine.getId())){
 					x.setCpu(currentMachine.getCpu());
 					x.setRam(currentMachine.getRam());
 					x.setId(currentMachine.getId());
+					x.setMachineIp(currentMachine.getMachineIp() );
 				}
 			});
 		

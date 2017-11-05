@@ -1,9 +1,7 @@
 package com.ingesup.restcontroller;
 
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,22 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ingesup.controller.ParkControllerSpring;
-import com.ingesup.controller.UpdateController;
 import com.ingesup.controller.utils.ControllerUtils;
 import com.ingesup.dto.MachineSwitchDto;
 import com.ingesup.dto.MachineSwitchDto.PostInput.SwitchInfo;
 import com.ingesup.dto.ParkListDto;
 import com.ingesup.dto.ParkListDto.GetOutput.Alert;
 import com.ingesup.hibernate.EntityManager;
-import com.ingesup.manager.MachineManager;
-import com.ingesup.manager.ParkManager;
+import com.ingesup.hibernate.MachineManager;
+import com.ingesup.hibernate.ParkManager;
 import com.ingesup.model.Machine;
 import com.ingesup.model.Park;
 import com.ingesup.model.Room;
-
-import antlr.collections.List;
 
 @RestController
 public class ParkRestController {
@@ -37,7 +30,11 @@ public class ParkRestController {
 	 * @return
 	 */
 	@RequestMapping(value="/rest/createPark", method= RequestMethod.POST)
-	public ResponseEntity<?> createPark(@RequestParam("parkName") String parkName){
+	public ResponseEntity<?> createPark(@RequestParam("parkName") String parkName, HttpServletRequest request){
+		
+		// 0. Validating the user
+		if(!ControllerUtils.isValidUser(request))
+			return new ResponseEntity<>("You does'nt have access to this action.",HttpStatus.UNAUTHORIZED);
 		
 		// 1. Trying to get a potential park with the same given parkName
 		Park testPark = ParkManager.get(parkName);
@@ -58,7 +55,11 @@ public class ParkRestController {
 	}
 	
 	@RequestMapping(value="/rest/editPark", method= RequestMethod.POST)
-	public ResponseEntity<?> editPark(@RequestBody MachineSwitchDto.PostInput input){
+	public ResponseEntity<?> editPark(@RequestBody MachineSwitchDto.PostInput input, HttpServletRequest request){
+		
+		// 0. Validating the user
+		if(!ControllerUtils.isValidUser(request))
+			return new ResponseEntity<>("You does'nt have access to this action.",HttpStatus.UNAUTHORIZED);
 		
 		java.util.List<Machine> machienlist=new ArrayList<>();
 		for (SwitchInfo change : input.getSwitchInfoList()) {
@@ -80,7 +81,7 @@ public class ParkRestController {
 	public ResponseEntity<?> deletePark(@RequestParam("parkId") Integer parkId, HttpServletRequest request){
 		
 		// 1. Validating user
-		if(!ControllerUtils.validateUser(request))
+		if(!ControllerUtils.isValidUser(request))
 			return new ResponseEntity<>("You does'nt have access to this action.",HttpStatus.UNAUTHORIZED);
 		
 		// 2. Getting request park by Id

@@ -1,11 +1,10 @@
-package com.ingesup.manager;
+package com.ingesup.hibernate;
 
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 
-import com.ingesup.hibernate.HibernateUtilMastere;
 import com.ingesup.model.Room;
 
 public class RoomManager {

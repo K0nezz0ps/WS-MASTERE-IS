@@ -7,8 +7,12 @@
 	<head>
 		<!-- UTF-8 -->
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<!-- AutoRefresh -->
-		<meta http-equiv="refresh" content="60">
+		
+		<c:if test="${autoRefresh == true}">
+			<!-- AutoRefresh -->
+			<meta http-equiv="refresh" content="60">
+		</c:if>
+		
 		<!-- Import for JQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!-- Import for AngularJS -->
@@ -25,7 +29,7 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-drag-and-drop-lists/1.4.0/angular-drag-and-drop-lists.min.js"></script>
 	    <link href="/WS-MASTERE-IS/assets/styles/c.css" rel="stylesheet">
 		<!-- Title -->
-		<title>IngéSup - Dashboard</title>
+		<title>IngéSup - ${pageTitle}</title>
 		<link rel="icon" type="image/png" href="/WS-MASTERE-IS/assets/images/favicon.png" />
 		
 		<script>
@@ -45,5 +49,6 @@
 	
 	<header class="header-container">
 		<a href="/WS-MASTERE-IS/park"><img src="/WS-MASTERE-IS/assets/images/ingesup_header_img.png" style="margin: 7px 0 7px 7px; height: 35px;"/></a>
-		<a id="logout" href="/WS-CNS-AUTH/logout"><i class="material-icons">power_settings_new</i></a>
+		<a class="shortcut" title="Logout" href="/WS-CNS-AUTH/logout"><i class="material-icons">power_settings_new</i></a>
+		<a class="shortcut" title="Security Center" href="/WS-CNS-AUTH/securityCenter"><i class="material-icons" style="color: white;">account_circle</i></a>
 	</header>

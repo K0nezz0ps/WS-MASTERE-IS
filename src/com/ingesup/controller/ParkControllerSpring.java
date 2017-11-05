@@ -43,8 +43,6 @@ public class ParkControllerSpring {
 	@RequestMapping(value="/park", method = RequestMethod.GET)
 	public String park(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
-//		UserDetails user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
 		// 1. Verifying that the current user is connected
 		if(!ControllerUtils.isValidUser(request)){
 			ControllerUtils.redirect("/WS-CNS-AUTH/login", response);
@@ -99,6 +97,9 @@ public class ParkControllerSpring {
         model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("roomList", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("currentPark", new Gson().toJson(new ArrayList<>()));
+        
+        model.addAttribute("pageTitle", "Park Monitor");
+        model.addAttribute("autoRefresh", false);
 		
         return "park";
 	}
@@ -154,6 +155,9 @@ public class ParkControllerSpring {
 		model.addAttribute("parkList", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("room", new Gson().toJson(new ArrayList<>()));
         model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
+        
+        model.addAttribute("pageTitle", "Rooms Overview");
+        model.addAttribute("autoRefresh", false);
 	
 		return "parkMain";
 		
@@ -211,6 +215,9 @@ public class ParkControllerSpring {
 		// 7. Null values here (to match with the JSP), because they are not required but potentially used by the JS
 		model.addAttribute("currentPark", new Gson().toJson(new ArrayList<>()));
 		model.addAttribute("parkList", new Gson().toJson(new ArrayList<>()));
+		
+        model.addAttribute("pageTitle", "Room Manager");
+        model.addAttribute("autoRefresh", true);
 		
 		return "roomProfile";
 		

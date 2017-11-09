@@ -9,6 +9,28 @@ import com.ingesup.model.Machine;
 public class MachineManager {
 	
 	/**
+	 * Intert in database the given machine
+	 * @param machine
+	 */
+	public static void create(Machine machine){
+		
+		try {
+			
+			String queryString = "INSERT INTO MACHINE (id, machineIp, ram, cpu, storage, id_room) VALUES (" + machine.getId() + ", " + "\"" + machine.getMachineIp() + "\"" + ", " + machine.getRam() + ", " + machine.getCpu() + ", \"[]\", " + machine.getId_room() + ")" ;
+			
+			Query query = HibernateUtilMastere.getSession().createSQLQuery(queryString);
+			
+			query.executeUpdate();
+			
+		} catch(HibernateException e){
+			e.printStackTrace();
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
+		}
+		
+	}
+	
+	/**
 	 * Return the attached Machine for the given IP
 	 * @param ip
 	 * @return
@@ -30,6 +52,11 @@ public class MachineManager {
 
 	}
 	
+	/**
+	 * Return the machine attached to the given id
+	 * @param id
+	 * @return
+	 */
 	public static Machine getById(Integer id){
 		
 		try {
@@ -47,7 +74,11 @@ public class MachineManager {
 
 	}
 	
-	
+	/**
+	 * Return the whole list of machine attached to the given park id
+	 * @param parkId
+	 * @return
+	 */
 	public static List<Machine> getAll(Integer parkId) {
 		
 		try {
@@ -88,6 +119,26 @@ public class MachineManager {
 			HibernateUtilMastere.cleanHibernateExchange();
 		}
 
+	}
+	
+	public static Integer getLast() {
+		
+		try{
+			
+			Query query = HibernateUtilMastere.getSession().createQuery("select max(id) from Machine");
+			
+			Integer machine = (Integer) query.uniqueResult();
+			
+			return machine;
+			
+		} catch(HibernateException e){
+			e.printStackTrace();
+			
+			return null;
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
+		}
+		
 	}
 
 }

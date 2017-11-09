@@ -148,16 +148,15 @@ parkApp.controller('parkProfileController', function($scope, $rootScope, $http) 
 	}
 	
 	// Delete a room from a park
-	$scope.deleteRoom = function() {
+	$scope.deleteRoom = function(room) {
 		
-		if($scope.selectedRoom == null)
-			return;
-		
-		if(confirm("La salle " + $scope.selectedRoom.name + " sera supprimée.")){
-			// TODO: AJAX Request to delete a Room
+		if(confirm("La salle " + room.name + " sera supprimée.")){
+			
+			$http.post("/WS-MASTERE-IS/rest/RoomDelete?roomId="+room.id)
+				.then(function(response){
+					window.location.href = "/WS-MASTERE-IS/park/" + currentPark.id;
+				});
 		}
-		
-		
 	}
     
 });
@@ -171,6 +170,11 @@ parkApp.controller('roomProfileController', function($scope, $rootScope, $http) 
 	$scope.currentRoom = currentRoom;
 	$scope.historyList = historyList;
 	$scope.roomList    = roomList;
+	$scope.input = {
+			machineName : "",
+			machineCpu  : "",
+			machineRam  : ""
+	};
 	
 	$scope.createMachine = function(){
 		
@@ -178,13 +182,27 @@ parkApp.controller('roomProfileController', function($scope, $rootScope, $http) 
 		$scope.showCreateValidation = false;
 		
 		// Check if the name is invalid (empty, here)
-		if($scope.input.machineName.trim() == ""){
-			$scope.errorCreateMessage = "Invalid name";
+		if($scope.input.machineIp.trim() == "" || $scope.input.machineRam.trim() == "" || $scope.input.machineCpu.trim() == ""){
+			$scope.errorCreateMessage = "Invalid input.";
 			$scope.showCreateError = true;
 			return;
 		}
 		else{
 			
+			var data = {};
+			data.machineIp = $scope.input.machineIp;
+			data.machineCpu  = $scope.input.machineCpu;
+			data.machineRam  = $scope.input.machineRam;
+			data.roomId      = $scope.currentRoom.id;
+			
+			$http.post("/WS-MASTERE-IS/rest/MachineCreate", data)
+				.then(function(response){
+					
+					if(response.status == 201)
+						window.location.href = "/WS-MASTERE-IS/park/" + $scope.currentRoom.idPark + "/" + $scope.currentRoom.id;
+					
+				});
+
 		}
 	}
 	

@@ -1,6 +1,9 @@
 package com.ingesup.restcontroller;
 
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ingesup.dto.MachineSwitchDto;
+import com.ingesup.controller.utils.ControllerUtils;
+import com.ingesup.dto.MachineCreate;
 import com.ingesup.hibernate.EntityManager;
 import com.ingesup.hibernate.MachineManager;
 import com.ingesup.model.Machine;
+import com.ingesup.model.Room;
 
 @RestController
 public class MachineRestController {
@@ -58,12 +63,29 @@ public class MachineRestController {
 	 * @param input
 	 * @return
 	 */
-	@RequestMapping(value="/rest/Machine/switch", method = RequestMethod.POST)
-	public ResponseEntity<?> switchMachine(@RequestBody MachineSwitchDto.PostInput input){
+	@RequestMapping(value="/rest/MachineCreate", method = RequestMethod.POST)
+	public ResponseEntity<?> switchMachine(@RequestBody MachineCreate.PostInput input, HttpServletRequest request){
 		
+		// 1. Validating current user
+		if(!ControllerUtils.isValidUser(request))
+			return new ResponseEntity<>("Not permitted.", HttpStatus.UNAUTHORIZED);
 		
+		Integer lastMachine = MachineManager.getLast();
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		if(lastMachine == null)
+			return new ResponseEntity<>("Can't reach the last machine.", HttpStatus.NOT_FOUND);
+		
+		Machine newMachine = new Machine();
+		newMachine.setId(lastMachine + 1);
+		newMachine.setMachineIp(input.getMachineIp());
+		newMachine.setCpu(Float.valueOf(input.getMachineCpu()));
+		newMachine.setRam(Float.valueOf(input.getMachineRam()));
+		newMachine.setId_room(input.getRoomId());
+		
+		MachineManager.create(newMachine);
+		
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 }
+ 

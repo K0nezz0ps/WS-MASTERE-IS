@@ -69,7 +69,6 @@ public class UpdateRestController {
 		// 4. Creating a new History line
 		History historyItem = new History();
 		//historyItem.setMachineId(currentMachine.getId());
-		
 		historyItem.setDateEvent(new Date());
 		historyItem.setId_machine(currentMachine.getId());
 		historyItem.setCpuState(cpu);

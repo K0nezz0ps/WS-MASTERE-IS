@@ -77,7 +77,7 @@ public class ParkControllerSpring {
 						ComponentState ramState = ComponentState.forValue(x.getRamState());
 						
 						// 4.2.1 In case of higher ComponentState than RAISED, create an alert
-						if(cpuState.equals(ComponentState.RAISED) || cpuState.equals(ComponentState.HEAVEN) || cpuState.equals(ComponentState.ALERT) || ramState.equals(ComponentState.RAISED) || ramState.equals(ComponentState.HEAVEN) || ramState.equals(ComponentState.ALERT))
+						if(cpuState.equals(ComponentState.ALERT) || ramState.equals(ComponentState.ALERT))
 							currentParkRecentAlert.add(new Alert(currentMachine.getMachineIp(), currentRoomList.stream().filter(y -> y.getId() == currentMachine.getId_room()).findFirst().orElse(null) , currentPark));
 						
 					}
@@ -192,17 +192,26 @@ public class ParkControllerSpring {
 		for(History currentHistory : HistoryManager.getRecentList())
 			recentHistoryList.add(new HistoryUpdateDto.GetOutput(currentHistory.getId_machine(), null, null, currentHistory.getDateEvent(), null , ComponentState.forValue(currentHistory.getCpuState()), ComponentState.forValue(currentHistory.getRamState()), null));
 
-		// 4. Parsing values for the output
-		for(Machine currentMachine : machineList)
-			recentHistoryList.stream().forEach(x -> {
-				if(x.getId().equals(currentMachine.getId())){
-					x.setCpu(currentMachine.getCpu());
-					x.setRam(currentMachine.getRam());
-					x.setId(currentMachine.getId());
-					x.setMachineIp(currentMachine.getMachineIp() );
-				}
-			});
-		
+		if(recentHistoryList.isEmpty()){
+			for(Machine currentMachine : machineList){
+				
+				recentHistoryList.add(new HistoryUpdateDto.GetOutput(null, currentMachine.getCpu(), currentMachine.getRam(), null, currentMachine.getMachineIp(), null, null, null));
+			}
+		}
+		else {
+			// 4. Parsing values for the output
+			for(Machine currentMachine : machineList){
+				recentHistoryList.stream().forEach(x -> {
+					if(x.getId().equals(currentMachine.getId())){
+						x.setCpu(currentMachine.getCpu());
+						x.setRam(currentMachine.getRam());
+						x.setId(currentMachine.getId());
+						x.setMachineIp(currentMachine.getMachineIp() );
+					}
+				});
+			}
+		}
+
 		// 5. Getting all rooms of the parkId
 		List<Room> roomList = RoomManager.getAllRoom(parkId);
 		roomList.remove(currentRoom);

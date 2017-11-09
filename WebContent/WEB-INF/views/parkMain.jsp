@@ -15,6 +15,10 @@
 		<div ng-repeat="room in roomList" style="float: left; margin: 10px;">
 			<div class="col s12 m3">
 				<div class="card blue-grey darken-1">
+				
+					<!-- Delete button -->
+					<i class="material-icons" style="position: relative; padding: 5px; color: white; cursor: pointer;" ng-click="deleteRoom(room)">highlight_off</i>
+				
 					<div style="background-color: #e2e2e2; border: 3px solid grey;" class="card-content white-text">
 					
 						<!-- ROOM NAME -->
@@ -46,15 +50,5 @@
 	</div>
 	
 	<a style="position: absolute; right: 200px; top: 120px; background-color: rgb(46, 169, 39);" ng-click="editPark()" class="waves-effect waves-light btn ng-binding"><i class="material-icons right ng-binding">control_point</i>appliquer</a>
-	
-	<!-- Delete ROOM -->
-	<div style="position: absolute; right: 200px; top: 200px;">
-		<select ng-model="selectedRoom">
-			<option ng-repeat="room in roomList" ng-value="{{room}}">{{room.name}}</option>
-		</select>
-		
-		<a style="background-color: rgb(46, 169, 39);" ng-click="deleteRoom()" class="waves-effect waves-light btn ng-binding"><i class="material-icons right ng-binding">control_point</i>DELETE</a>
-	
-	</div>
 
 	<jsp:include page="footer.jsp" />

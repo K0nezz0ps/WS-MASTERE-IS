@@ -3,6 +3,8 @@ package com.ingesup.hibernate;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.ingesup.model.Room;
@@ -55,7 +57,29 @@ public class RoomManager {
 		} finally {
 			HibernateUtilMastere.cleanHibernateExchange();
 		}
+	}
+	
+	/**
+	 * Delete the room attached to the given roomId Integer
+	 * @param roomId
+	 */
+	public static void delete(Integer roomId){
 		
+		try{
+			
+			Query query = HibernateUtilMastere.getSession().createQuery("from Room where id=:id");
+			query.setParameter("id", roomId);
+			
+			Room currentRoom = (Room) query.uniqueResult();
+			
+			if(currentRoom != null)
+				HibernateUtilMastere.getSession().delete(currentRoom);
+			
+		} catch(HibernateException e){
+			
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
+		}
 		
 	}
 

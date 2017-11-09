@@ -129,7 +129,10 @@ public class ParkControllerSpring {
 		List<Room> roomList = RoomManager.getAllRoom(parkId);
 		
 		// 4. Get all Machine from room ids list
-		List<Machine> machineList = MachineManager.getAllByRoomIds(roomList.stream().map(Room::getId).collect(Collectors.toList()));
+		List<Machine> machineList = new ArrayList<>();
+		
+		if(!roomList.isEmpty())
+			MachineManager.getAllByRoomIds(roomList.stream().map(Room::getId).collect(Collectors.toList()));
 		
 		// 5. Mapping all machine per room (Integer = roomId, Machine = Machine object)
 		Map<Integer, List<Machine>> machineMap = new HashMap<>();
@@ -191,8 +194,15 @@ public class ParkControllerSpring {
 		List<HistoryUpdateDto.GetOutput> recentHistoryList = new ArrayList<>();
 		
 		// ========= BEGINNING OF SHIT CODE ===========
-		for(History currentHistory : HistoryManager.getRecentList())
-			recentHistoryList.add(new HistoryUpdateDto.GetOutput(currentHistory.getId_machine(), null, null, currentHistory.getDateEvent(), null , ComponentState.forValue(currentHistory.getCpuState()), ComponentState.forValue(currentHistory.getRamState()), null));
+		for(History currentHistory : HistoryManager.getRecentList()){
+			
+			for(Machine currentMachine : machineList){
+				if(currentHistory.getId_machine().equals(currentMachine.getId())){
+					recentHistoryList.add(new HistoryUpdateDto.GetOutput(currentHistory.getId_machine(), null, null, currentHistory.getDateEvent(), null , ComponentState.forValue(currentHistory.getCpuState()), ComponentState.forValue(currentHistory.getRamState()), null));
+					break;
+				}
+			}
+		}
 
 		if(recentHistoryList.isEmpty()){
 			for(Machine currentMachine : machineList){

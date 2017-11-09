@@ -21,9 +21,11 @@ import com.ingesup.dto.ParkListDto.GetOutput.Alert;
 import com.ingesup.hibernate.EntityManager;
 import com.ingesup.hibernate.MachineManager;
 import com.ingesup.hibernate.ParkManager;
+import com.ingesup.hibernate.UserManager;
 import com.ingesup.model.Machine;
 import com.ingesup.model.Park;
 import com.ingesup.model.Room;
+import com.ingesup.model.User;
 
 @RestController
 public class ParkRestController {
@@ -71,6 +73,12 @@ public class ParkRestController {
 		// 3. Else, create the park
 		Park newPark = new Park();
 		newPark.setName(parkName);
+		
+		User currentUser = UserManager.getUser(ControllerUtils.getCookieEmail(request));
+		newPark.setId_user(currentUser.getId());
+		
+		newPark.setRoomIds("[]");
+		
 		ParkManager.create(newPark);
 		
 		ParkListDto.GetOutput output = new ParkListDto.GetOutput(ParkManager.get(parkName), new ArrayList<Room>(), new ArrayList<Alert>());

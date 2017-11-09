@@ -1,5 +1,6 @@
 package com.ingesup.controller;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -148,18 +149,37 @@ public class ParkControllerSpring {
 		// 6. Creating outputList
 		List<RoomDto.GetOutput> outputList = new ArrayList<>();
 		
-		// 6.1 Adding values to the outputList
-		roomList.stream().forEach(x -> { outputList.add(new RoomDto.GetOutput(x.getId(), x.getName(), x.getId_park(), machineMap.get(x.getId()))); });
+		// 6.1 Loading the last alert for each room in the park
+		List<History> recentList = HistoryManager.getRecentList();
+
+		for(Room currentRoom : roomList){
+			
+			List<Machine> currentMachineList = MachineManager.getAllByRoomIds(Arrays.asList(currentRoom.getId()));
+			
+			Boolean flag = false;
+			
+			for(History currentHistory : recentList){
+				
+				for(Machine currentMachine : currentMachineList){
+					
+					if(currentMachine.getId().equals(currentHistory.getId_machine()))
+						flag = true;
+					
+				}
+			}
+			
+			outputList.add(new RoomDto.GetOutput(currentRoom.getId(), currentRoom.getName(), currentRoom.getId_park(), machineMap.get(currentRoom.getId()), flag)); 
+			
+		}
 
 		// 7. Adding model attributes
 		model.addAttribute("currentPark", new Gson().toJson(currentPark));
 		model.addAttribute("roomList", new Gson().toJson(outputList));
+        model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
 		
 		// 8. Null values here (to match with the JSP), because they are not required but potentially used by the JS
 		model.addAttribute("parkList", new Gson().toJson(new ArrayList<>()));
-        model.addAttribute("room", new Gson().toJson(new ArrayList<>()));
-        model.addAttribute("historyList", new Gson().toJson(new ArrayList<>()));
-        
+        model.addAttribute("room", new Gson().toJson(new ArrayList<>()));      
         model.addAttribute("pageTitle", "Rooms Overview");
         model.addAttribute("autoRefresh", false);
 	
@@ -251,7 +271,7 @@ public class ParkControllerSpring {
 		roomList.remove(currentRoom);
 		
 		// 6. Adding the GetOutput to the JSP Model
-		model.addAttribute("room", new Gson().toJson(new RoomDto.GetOutput(currentRoom.getId(), currentRoom.getName(), currentRoom.getId_park(), machineList)));
+		model.addAttribute("room", new Gson().toJson(new RoomDto.GetOutput(currentRoom.getId(), currentRoom.getName(), currentRoom.getId_park(), machineList, false)));
 		model.addAttribute("historyList", new Gson().toJson(recentHistoryList));
 		model.addAttribute("roomList", new Gson().toJson(roomList));
 		

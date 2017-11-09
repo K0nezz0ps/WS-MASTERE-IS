@@ -19,6 +19,7 @@ public class RoomDto {
 		private String name;
 		private Integer idPark;
 		private List<Machine> machineList;
+		private Boolean hasAlert;
 		
 	}
 	

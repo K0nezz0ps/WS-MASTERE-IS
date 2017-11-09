@@ -7,6 +7,24 @@ import com.ingesup.model.Park;
 
 @SuppressWarnings({"deprecation","unchecked","rawtypes"})
 public class ParkManager {
+	
+	// Return the whole list of parks
+	public static List<Park> getAll(){
+		
+		try{
+			
+			Query query = HibernateUtilMastere.getSession().createQuery("from Park");
+			
+			List<Park> parkList = query.list();
+			
+			return parkList; 
+			
+		} catch (HibernateException e){
+			e.printStackTrace();
+			return null;
+		}
+		 
+	}
 
 	public static Park get(String parkName){
 		

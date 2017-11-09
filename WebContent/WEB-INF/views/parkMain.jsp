@@ -47,4 +47,14 @@
 	
 	<a style="position: absolute; right: 200px; top: 120px; background-color: rgb(46, 169, 39);" ng-click="editPark()" class="waves-effect waves-light btn ng-binding"><i class="material-icons right ng-binding">control_point</i>appliquer</a>
 	
+	<!-- Delete ROOM -->
+	<div style="position: absolute; right: 200px; top: 200px;">
+		<select ng-model="selectedRoom">
+			<option ng-repeat="room in roomList" ng-value="{{room}}">{{room.name}}</option>
+		</select>
+		
+		<a style="background-color: rgb(46, 169, 39);" ng-click="deleteRoom()" class="waves-effect waves-light btn ng-binding"><i class="material-icons right ng-binding">control_point</i>DELETE</a>
+	
+	</div>
+
 	<jsp:include page="footer.jsp" />

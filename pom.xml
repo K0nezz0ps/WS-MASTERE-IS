@@ -12,6 +12,13 @@
     </properties>
  
     <dependencies>
+    	
+    		<dependency>
+    			  <groupId>com.ingesup</groupId>
+  <artifactId>FW-COM</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+    		</dependency>
+    
 	        <dependency>
 	            <groupId>org.springframework</groupId>
 	            <artifactId>spring-core</artifactId>

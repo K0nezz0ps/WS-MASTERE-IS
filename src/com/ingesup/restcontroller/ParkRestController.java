@@ -1,7 +1,10 @@
 package com.ingesup.restcontroller;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.ingesup.controller.utils.ControllerUtils;
 import com.ingesup.dto.MachineSwitchDto;
 import com.ingesup.dto.MachineSwitchDto.PostInput.SwitchInfo;
@@ -23,6 +27,27 @@ import com.ingesup.model.Room;
 
 @RestController
 public class ParkRestController {
+	
+	/**
+	 * GET EndPoint that return the whole list of park in the database
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/rest/Park", method=RequestMethod.GET)
+	public ResponseEntity<?> getPark(HttpServletRequest request){
+		
+		// 1.0 Validating User
+		if(!ControllerUtils.isValidUser(request))
+			return new ResponseEntity<>("You does'nt have access to this action.",HttpStatus.UNAUTHORIZED);
+		
+		// 2. Get all parks
+		List<Park> parkList = ParkManager.getAll();
+		
+		if(parkList == null)
+			parkList = new ArrayList<Park>();
+		
+		return new ResponseEntity<>(parkList, HttpStatus.OK);
+	}
 	
 	/**
 	 * POST Function to create a Park

@@ -121,6 +121,7 @@ parkApp.controller('parkProfileController', function($scope, $rootScope, $http) 
 	$scope.currentPark 	= currentPark;
 	$scope.roomList 	= roomList;
 	$scope.dataSwitchList = {};
+	$scope.selectedRoom = null;
 	
     $scope.$watch('roomList', function(model) {
         $scope.modelAsJson = angular.toJson(model, true);
@@ -133,11 +134,9 @@ parkApp.controller('parkProfileController', function($scope, $rootScope, $http) 
         message += type + ' element was ' + action + ' position ' + index;
         console.log(message);
         $scope.arrayDataSwitch.push({machineId:type, targetRoomId: index});
-//        editp+='{"machineId":"'+type+'","targetRoomId":"'+index+'"},';
     };
     
 	$scope.editPark = function(){
-//		editp=editp.substring(0,editp.length-1)+'}';
 		
 		$scope.dataSwitchList.switchInfoList = $scope.arrayDataSwitch;
 		$http.post("/WS-MASTERE-IS/rest/editPark",$scope.dataSwitchList)
@@ -146,6 +145,19 @@ parkApp.controller('parkProfileController', function($scope, $rootScope, $http) 
 			
 			window.location.href = "/WS-MASTERE-IS/park/" + $scope.currentPark.id;
 		});
+	}
+	
+	// Delete a room from a park
+	$scope.deleteRoom = function() {
+		
+		if($scope.selectedRoom == null)
+			return;
+		
+		if(confirm("La salle " + $scope.selectedRoom.name + " sera supprimée.")){
+			// TODO: AJAX Request to delete a Room
+		}
+		
+		
 	}
     
 });

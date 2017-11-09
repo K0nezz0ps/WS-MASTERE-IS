@@ -4,9 +4,34 @@ import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import com.ingesup.model.Machine;
+import com.ingesup.model.Room;
 
 @SuppressWarnings({"deprecation","unchecked","rawtypes"})
 public class MachineManager {
+	
+	/**
+	 * Delete the machine attached to the given machineManager Integer
+	 * @param roomId
+	 */
+	public static void delete(Integer machineId){
+		
+		try{
+			
+			Query query = HibernateUtilMastere.getSession().createQuery("from Machine where id=:id");
+			query.setParameter("id", machineId);
+			
+			Machine currentRoom = (Machine) query.uniqueResult();
+			
+			if(currentRoom != null)
+				HibernateUtilMastere.getSession().delete(currentRoom);
+			
+		} catch(HibernateException e){
+			
+		} finally {
+			HibernateUtilMastere.cleanHibernateExchange();
+		}
+		
+	}
 	
 	/**
 	 * Intert in database the given machine

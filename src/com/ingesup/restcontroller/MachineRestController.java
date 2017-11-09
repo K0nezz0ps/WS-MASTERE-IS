@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ingesup.controller.utils.ControllerUtils;
 import com.ingesup.dto.MachineCreate;
 import com.ingesup.hibernate.EntityManager;
+import com.ingesup.hibernate.HibernateUtilMastere;
 import com.ingesup.hibernate.MachineManager;
+import com.ingesup.hibernate.RoomManager;
 import com.ingesup.model.Machine;
 import com.ingesup.model.Room;
 
@@ -46,7 +48,7 @@ public class MachineRestController {
 	 * @param name
 	 * @return
 	 */
-	@RequestMapping(value="/rest/Machine", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/rest/MachineDelete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> machineDelete(@RequestParam("machineId") String machineId){
 		
 		// 1. Getting the requested machine
@@ -70,21 +72,37 @@ public class MachineRestController {
 		if(!ControllerUtils.isValidUser(request))
 			return new ResponseEntity<>("Not permitted.", HttpStatus.UNAUTHORIZED);
 		
-		Integer lastMachine = MachineManager.getLast();
-		
-		if(lastMachine == null)
-			return new ResponseEntity<>("Can't reach the last machine.", HttpStatus.NOT_FOUND);
-		
+		// 2. Create the Machine
 		Machine newMachine = new Machine();
-		newMachine.setId(lastMachine + 1);
 		newMachine.setMachineIp(input.getMachineIp());
 		newMachine.setCpu(Float.valueOf(input.getMachineCpu()));
 		newMachine.setRam(Float.valueOf(input.getMachineRam()));
 		newMachine.setId_room(input.getRoomId());
+		newMachine.setStorage("[]");
 		
-		MachineManager.create(newMachine);
+		// 3. Save & Clean exchange
+		HibernateUtilMastere.getSession().save(newMachine);
+		HibernateUtilMastere.cleanHibernateExchange();
 		
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@RequestMapping(value="/rest/MachineDelete", method = RequestMethod.POST)
+	public ResponseEntity<?> deleteMachine(@RequestParam String machineIp, HttpServletRequest request){
+		
+		// 1. Validating user
+		if(!ControllerUtils.isValidUser(request))
+			return new ResponseEntity<>("Not permitted.", HttpStatus.UNAUTHORIZED);
+		
+		// 2. Get the requested machine
+		Machine currentMachine = MachineManager.getByIp(machineIp);
+		if(currentMachine == null)
+			return new ResponseEntity<>("Machine does'nt exist.", HttpStatus.NOT_FOUND);
+		
+		// 3. Delete the room then return 200 status
+		MachineManager.delete(currentMachine.getId());
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

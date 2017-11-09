@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.gson.Gson;
 import com.ingesup.controller.utils.ControllerUtils;
 import com.ingesup.dto.HistoryUpdateDto;
+import com.ingesup.dto.HistoryUpdateDto.GetOutput;
 import com.ingesup.dto.ParkListDto;
 import com.ingesup.dto.ParkListDto.GetOutput.Alert;
 import com.ingesup.hibernate.HistoryManager;
@@ -189,6 +190,7 @@ public class ParkControllerSpring {
 		
 		List<HistoryUpdateDto.GetOutput> recentHistoryList = new ArrayList<>();
 		
+		// ========= BEGINNING OF SHIT CODE ===========
 		for(History currentHistory : HistoryManager.getRecentList())
 			recentHistoryList.add(new HistoryUpdateDto.GetOutput(currentHistory.getId_machine(), null, null, currentHistory.getDateEvent(), null , ComponentState.forValue(currentHistory.getCpuState()), ComponentState.forValue(currentHistory.getRamState()), null));
 
@@ -206,11 +208,33 @@ public class ParkControllerSpring {
 						x.setCpu(currentMachine.getCpu());
 						x.setRam(currentMachine.getRam());
 						x.setId(currentMachine.getId());
-						x.setMachineIp(currentMachine.getMachineIp() );
+						x.setMachineIp(currentMachine.getMachineIp());
 					}
 				});
 			}
 		}
+		
+		List<Machine> ignoredMachine = new ArrayList<>();
+		
+		for(Machine sonarMachine : machineList){
+			
+			Boolean isPresent = false;
+			
+			for(GetOutput currentOutput : recentHistoryList){
+				if(currentOutput.getMachineIp().equals(sonarMachine.getMachineIp())){
+					isPresent = true;
+					break;
+				}
+			}
+			
+			if(!isPresent)
+				ignoredMachine.add(sonarMachine);
+		}
+		
+		for(Machine aloneMachine : ignoredMachine){
+			recentHistoryList.add(new HistoryUpdateDto.GetOutput(null, aloneMachine.getCpu(), aloneMachine.getRam(), null, aloneMachine.getMachineIp(), null, null, null));
+		}
+		// ========= END OF SHIT CODE ===========
 
 		// 5. Getting all rooms of the parkId
 		List<Room> roomList = RoomManager.getAllRoom(parkId);

@@ -123,6 +123,11 @@ parkApp.controller('parkProfileController', function($scope, $rootScope, $http) 
 	$scope.dataSwitchList = {};
 	$scope.selectedRoom = null;
 	
+	$scope.input = {
+			roomName : ""
+	};
+	
+	
     $scope.$watch('roomList', function(model) {
         $scope.modelAsJson = angular.toJson(model, true);
     }, true);
@@ -157,6 +162,37 @@ parkApp.controller('parkProfileController', function($scope, $rootScope, $http) 
 					window.location.href = "/WS-MASTERE-IS/park/" + currentPark.id;
 				});
 		}
+	}
+	
+	$scope.createRoom = function() {
+		
+		$scope.showCreateValidation = false;
+		$scope.showCreateError = false;
+		
+		if($scope.input.roomName.trim() == ""){
+			$scope.errorCreateMessage = "Invalid input.";
+			$scope.showCreateError = true;
+			return;
+		}
+		
+		$http.post("/WS-MASTERE-IS/rest/RoomCreate?roomName="+$scope.input.roomName+"&idPark=" + $scope.currentPark.id)
+			.then(function(response){
+				
+				if(response.status == 500){
+					$scope.errorCreateMessage = "Internal server error.";
+					$scope.showCreateError = true;
+				}
+			
+				if(response.status == 201)
+					window.location.href = "/WS-MASTERE-IS/park/" + currentPark.id;
+				
+				
+				
+			});
+			
+			
+			
+		
 	}
     
 });
@@ -207,6 +243,16 @@ parkApp.controller('roomProfileController', function($scope, $rootScope, $http) 
 	}
 	
 	$scope.deleteMachine = function(machine){
+		
+		if(confirm("The Machine with IP" + machine.machineIp + ", will be deleted.")){
+			
+			$http.post("/WS-MASTERE-IS/rest/MachineDelete?machineIp=" + machine.machineIp)
+				.then(function(response){
+					if(response.status == 200)
+						window.location.href = window.location.pathname;
+				});
+			
+		}
 		
 	}
 	

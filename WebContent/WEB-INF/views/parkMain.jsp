@@ -14,7 +14,7 @@
 	
 		<div ng-repeat="room in roomList" style="float: left; margin: 10px;">
 			<div class="col s12 m3">
-				<div class="card blue-grey darken-1">
+				<div class="card blue-grey darken-1" style="min-width: 256px;">
 				
 					<!-- Delete button -->
 					<i class="material-icons" style="position: relative; padding: 5px; color: white; cursor: pointer;" ng-click="deleteRoom(room)">highlight_off</i>
@@ -48,6 +48,17 @@
 			</div>
 	</div>
 	</div>
+	
+	<div style="width: 150px; position: absolute; top: 250px; right: 230px;">
+		
+			<!-- Machine IP -->
+			<input id="room_name" ng-model="input.roomName" placeholder="Room name" type="text" class="validate" style="width: 200px; margin-right: 10px;">
+			<label for="room_name"></label>
+			
+			<a ng-click="createRoom()" class="waves-effect waves-light btn">Create</a>
+			<p ng-if="showCreateError" style="color: red; font-size: 12px;">{{errorCreateMessage}}</p>
+			<p ng-if="showCreateValidation" style="color: green; font-size: 12px;">{{validationCreateMessage}}</p>
+		</div>
 	
 	<a style="position: absolute; right: 200px; top: 120px; background-color: rgb(46, 169, 39);" ng-click="editPark()" class="waves-effect waves-light btn ng-binding"><i class="material-icons right ng-binding">control_point</i>appliquer</a>
 

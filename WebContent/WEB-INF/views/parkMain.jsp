@@ -18,7 +18,10 @@
 				
 					<!-- Delete button -->
 					<i class="material-icons" style="position: relative; padding: 5px; color: white; cursor: pointer;" ng-click="deleteRoom(room)">highlight_off</i>
-				
+					
+					<!-- Display alert in case of >= ComponentState.RAISED -->
+					<i ng-if="room.hasAlert" style="color: #ff4343;" class="material-icons">error</i>
+					
 					<div style="background-color: #e2e2e2; border: 3px solid grey;" class="card-content white-text">
 					
 						<!-- ROOM NAME -->

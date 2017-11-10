@@ -133,7 +133,7 @@ public class ParkControllerSpring {
 		List<Machine> machineList = new ArrayList<>();
 		
 		if(!roomList.isEmpty())
-			MachineManager.getAllByRoomIds(roomList.stream().map(Room::getId).collect(Collectors.toList()));
+			machineList = MachineManager.getAllByRoomIds(roomList.stream().map(Room::getId).collect(Collectors.toList()));
 		
 		// 5. Mapping all machine per room (Integer = roomId, Machine = Machine object)
 		Map<Integer, List<Machine>> machineMap = new HashMap<>();
